@@ -14,7 +14,7 @@
 	],
 	image_caption: true,	// image caption
 	// toolbar options
-	toolbar: "insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link media jbimages | print preview | forecolor backcolor table | codesample save",
+	toolbar: "insertfile undo redo | styleselect fontselect fontsizeselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link media jbimages | print preview | forecolor backcolor table | codesample save",
 	// codesample options
 	codesample_languages: [
         {text: 'HTML/XML', value: 'markup'},

@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Editor</title>
+	<title>Text Editor</title>
 	<script type="text/javascript" src="tinymce/tinymce.min.js" ></script>
 	<script type="text/javascript">
 		tinymce.init({
-	selector: "div#test",
-	theme: "modern",
+	selector: "div#test", // To get the editor
+	// text editor plugins
 	plugins: [
-		"advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+		" advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
 		"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-		"save table contextmenu directionality template paste textcolor colorpicker imagetools codesample"
+		"save table contextmenu directionality template paste textcolor colorpicker imagetools codesample jbimages "
 	],
-	image_caption: true,
-	add_unload_trigger: false,
-	content_css: 'css/preview.content.css',
-	toolbar: "insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor table | codesample save",
+	image_caption: true,	// image caption
+	// toolbar options
+	toolbar: "insertfile undo redo | styleselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link media jbimages | print preview | forecolor backcolor table | codesample save",
+	// codesample options
 	codesample_languages: [
         {text: 'HTML/XML', value: 'markup'},
         {text: 'JavaScript', value: 'javascript'},
@@ -29,12 +29,13 @@
         {text: 'C++', value: 'cpp'}
     ],
 
+
 });
 	</script>
 </head>
 <body>
 	
-	<form method="POST" action="tofile.php">
+	<form id="my_form" method="POST" action="tofile.php" target="form_target" enctype="multipart/form-data">
 	<div id="test">
 		<?php
 			
@@ -44,6 +45,7 @@
 		?>
 	</div>
 	<button name="submitbtn" >POST</button>
+	
 	</form>
 </body>
 </html>

@@ -1,1 +1,298 @@
-<p><img src="server/images/aa1.png" /></p>
+<h2>Request vs.&nbsp;Data Consumption</h2>
+<p style="text-align: justify;">In the graph given below, we plotted the amount of data consumed by each layer of the infrastructure for each requests. Here we requested for two types of services (A and B). Total 6 requests have been made. We can see that over the time increase of requests leads to lower data consumption. Here we have only 6 requests. When 20 billion devices will be involved with the infrastructure the number of data consumption will get lower because the Layer 3 Agents will get matured over time.</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="server/images/aa.png" /></p>
+<table style="border-color: #000000; margin-left: auto; margin-right: auto;" border="1">
+<tbody>
+<tr>
+<td style="width: 72px;">
+<p style="text-align: center;"><strong>Requests</strong></p>
+</td>
+<td style="width: 150px;" colspan="2">
+<p><strong>SCUSL1M1</strong></p>
+</td>
+<td style="width: 150px;" colspan="2">
+<p><strong>SCUSL1M2</strong></p>
+</td>
+<td style="width: 150px;" colspan="2">
+<p><strong>SCUSL2M1</strong></p>
+</td>
+<td style="width: 150px;" colspan="2">
+<p><strong>SCUSL3M1</strong></p>
+</td>
+<td style="width: 150px;" colspan="2">
+<p><strong>CUSMAIN</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>Total</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>in</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>out</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>in</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>out</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>in</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>out</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>in</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>out</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>in</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>out</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>A1</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>192.28</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>153.31</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>256.6</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>208.29</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>122.94</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>115.41</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>202.34</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>221.4</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>1472.57</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>A2</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>452.01</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>370.7</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>249.22</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>95.9</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>97.34</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>54.03</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>0</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>10</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>1329.2</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>B3</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>148.3</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>203.53</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>356.48</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>98.53</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>202.83</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>256.38</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>82.66</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>39.24</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>1387.95</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>B4</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>251.33</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>277.32</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>144.56</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>91</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>96.61</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>56.63</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>12</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>11</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>940.45</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>A5</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>247.65</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>274.5</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>144.84</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>90.79</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>10.1</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>0.56</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>0</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>15</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>783.44</strong></p>
+</td>
+</tr>
+<tr>
+<td style="width: 72px;">
+<p><strong>B6</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>&nbsp;</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>232.05</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>274.45</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>144.41</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>90.94</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>12.33</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>11.2</strong></p>
+</td>
+<td style="width: 79px;">
+<p><strong>19</strong></p>
+</td>
+<td style="width: 65px;">
+<p><strong>0</strong></p>
+</td>
+<td style="width: 72px;">
+<p><strong>784.38</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align: center;">&nbsp;</p>
+<p style="text-align: center;">&nbsp;</p>

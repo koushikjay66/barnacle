@@ -17,7 +17,7 @@
 		}//end of notificationCount function
 
 		public function details($offset=0,$r_id){
-			$sql="SELECT * FROM notification WHERE receiver='{r_id}' AND read_status = 0";
+			$sql="SELECT * FROM notification WHERE receiver='{$r_id}' AND read_status = 0";
 			echo $sql;
 			// return $this->database->fetch_multiple_result($sql);
 		}//end of details function

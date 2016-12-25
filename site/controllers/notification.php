@@ -24,7 +24,9 @@ class notification extends controller
 		//calldetails from model notification
 		// call methods per notification type to make notifications {following,story,comment,reply}
 		$res = $this->model->{__FUNCTION__}($offset, "koushikjay66");
-
+		for ($i=0; $i < ; $i++) { 
+			# code...
+		}
 
 	}
 

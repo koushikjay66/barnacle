@@ -1,52 +1,78 @@
-<?php
+\<?php
+
 
 /**
-* The Main Controller Loader Class . 
-
+* This is the Bootstrap Class where All the URL Construction Logic Works
 */
-class bootstrap13
+
+class bootstrap
 {
-	
+
+	private $get_keys;
+	public $client_ip;
 	function __construct()
-	{
-
-		/*
-			Constructor Checks for a if a GET is set.
-			If  GET['url'] is set then it removes all the spaces and parse by "/"
-		*/
-
+	{	
+		$this->client_ip=(new annonymus_functions())->getRealIpAddr();
+		
 		if(isset($_GET['url'])){
 
 			$url=explode("/", trim($_GET['url']));
 
-			self::ignite($url);
-			
-		}else{
-			// If not logged in or didnont type anything send user to the default index.php page
-			if(!isset($_SESSION['id'])){
-				echo "Got Here";
-				//header("Location: ".LANDING_PAGE."/");
-			}else{
-				// Do the things you want to do
-				$index=new admin();
+			unset($_GET['url']);
+
+
+			if($url[sizeof($url)-1]==""){
+
+				unset($url[sizeof($url)-1]);
+
 			}
-			
+
+			self::ignite($url);
+
+		}else{
+			if(isset($_SESSION['id'])){
+				// Search and Load Default User Account Page
+			}else{
+				// Load Landing Page
+				$landing_page=new index();
+			}
+
 		}
-	}// End of contructor Function 
+
+	}// End of constructor Function 
 
 	private function ignite($url){
+		//echo "Now Ready to call my method";
+
 
 		if(file_exists("controllers/".$url[0].".php")){
-			if(isset($url[1]) && $url[1]!=null){
-				$c=new $url[0]($url[1]);
-			}else {
 
-				$c=new $url[0]();
+			// Now Finally it is time to call the Class
+			$c= new $url[0]($this->parse());
+			if(isset($url[1])){
+				if(method_exists($c, $url[1]) && (new ReflectionMethod($c, $url[1]))->isPublic()){
+
+					$c->$url[1]();
+				}
+				else{
+					echo "Error 404 Call. No Suitable method Found";
+
+				}
+
 			}
-		}// if file exists
-		else{
 
-			$err=new error();;
-		}// if file not exists
+		}else{
+
+			// Error 404 Call. No Suitable method Found
+			echo "Error 404 Call. No Suitable class Found";
+		}
+
+	}// End of function ignite
+
+	private function parse(){
+		if(isset($_GET)){
+			return $gets=$_GET;
+		}
+		return null;
 	}
-}
+}//End of class

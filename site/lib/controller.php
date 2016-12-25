@@ -9,7 +9,8 @@ class controller
 	protected $view;
 	function __construct($model_name)
 	{
-		$this->model = new "model_".$model_name();
+		$str = "model_".$model_name;
+		$this->model = new $str();
 		$this->view=new view();
 	}
 }

@@ -11,6 +11,7 @@ class controller
 	function __construct($model_name)
 	{
 		$str = "model_".$model_name;
+		echo $str;
 		$this->model = new $str();
 		$this->view=new view();
 	}

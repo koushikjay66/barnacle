@@ -1,5 +1,5 @@
-\<?php
-
+<?php
+if (! defined('LANDING_PAGE')) exit('No direct script access allowed');
 
 /**
 * This is the Bootstrap Class where All the URL Construction Logic Works
@@ -13,6 +13,7 @@ class bootstrap
 	function __construct()
 	{	
 		$this->client_ip=(new annonymus_functions())->getRealIpAddr();
+		echo "<h1>".annonymus_functions::is_asynchronous()."</h1>";
 		
 		if(isset($_GET['url'])){
 

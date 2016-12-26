@@ -1,5 +1,5 @@
 <?php
-
+if (! defined('LANDING_PAGE')) exit('No direct script access allowed');
 /**
 * The Main Controller Loader Class . 
 

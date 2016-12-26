@@ -11,9 +11,9 @@
 class post extends controller
 {
 	
-	function __construct()
+	function __construct($subs)
 	{
-		parent::__construct(__CLASS__);
+		parent::__construct(__CLASS__ );
 	}// End of constructor
 
 
@@ -41,13 +41,14 @@ class post extends controller
 	* 
 	* INPUT: post_id, $get variable should not be present here. If presented but the program should ignore it. 
 	* 
-	*  After Editing Author Should be able to Upload it or save a draft to it. So a $_FILE $_POST parameter may be checked. 
+	*  After Editing Author Should be able to Upload it or save a draft to it. So a $_FILE $_POST parameter may be checked.
+	* Allowed only if teh session has been started. Otherwise redirect User to LogIn Page
 	*  
 	* OUTPUT: If the User didn't set any Upload File Parameter 
 	*/
 	
 	public function edit($post_id, $gets=null){
-
+		parent::permission_checker();
 
 	}// End of cuntion view
 

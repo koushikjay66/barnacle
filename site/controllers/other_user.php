@@ -4,7 +4,7 @@
 /**
 * URL: http://barnacle/koushikjay66
 */
-class home extends controller
+class other_user extends controller
 {
 	
 	
@@ -12,10 +12,7 @@ class home extends controller
 	{
 
 		parent::__construct(__CLASS__);
-		$this->post_new();
-		$this->pinned();
-		$this->trending();
-		$this->newsfeed();
+		$this->user_posts();
 		$this->profile_info();
 		$this->propic();
 		$this->static_things();
@@ -25,39 +22,12 @@ class home extends controller
 
 	/*
 	* Input:
-	* Output: show view of post a new story
+	* Output: show view of that user's posts
 	*/
-	public static function post_new()
-	{
-		# code...
-	}// End of function post_new
-
-	/*
-	* Input:
-	* Output: show view of pinned posts
-	*/
-	public static function pinned()
-	{
-		# code...
-	}// End of function pinned
-
-	/*
-	* Input:
-	* Output: show view of trending posts
-	*/
-	public static function trending()
+	public static function user_posts()
 	{
 		# code...
 	}// End of function trending
-
-	/*
-	* Input:
-	* Output: show view of newsfeed
-	*/
-	public static function newsfeed()
-	{
-		# code...
-	}// End of function newsfeed
 
 	/*
 	* Input:

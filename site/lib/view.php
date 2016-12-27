@@ -13,6 +13,6 @@ class view
 
 	public function render($name){
 
-		require $name;
+		require "views/".$name;
 	}
 }

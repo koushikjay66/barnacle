@@ -10,6 +10,7 @@ class bootstrap
 
 	private $get_keys;
 	public $client_ip;
+
 	function __construct()
 	{	
 		$this->client_ip=(new annonymus_functions())->getRealIpAddr();
@@ -33,9 +34,13 @@ class bootstrap
 		}else{
 			if(isset($_SESSION['id'])){
 				// Search and Load Default User Account Page
+				$c = new home(session::user_id);
+				$c->view_loader();
 			}else{
 				// Load Landing Page
-				$landing_page=new index();
+
+				$landing_page=new index(self::parse());
+				$landing_page->view_loader();
 			}
 
 		}
@@ -54,6 +59,7 @@ class bootstrap
 				if(method_exists($c, $url[1]) && (new ReflectionMethod($c, $url[1]))->isPublic()){
 
 					$c->$url[1]();
+					$c->view_loader();
 				}
 				else{
 					echo "Error 404 Call. No Suitable method Found";
@@ -61,6 +67,7 @@ class bootstrap
 				}
 
 			}
+			$c->view_loader();
 
 		}else{
 

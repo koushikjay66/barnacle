@@ -8,9 +8,9 @@
 class session
 {
 	public static $user_id;
+	//$user_id, $user_name=null
 	
-	
-	function __construct($user_id, $user_name=null){
+	function __construct(){
 
 		if (session_status() == PHP_SESSION_NONE) {
    			 session_start();

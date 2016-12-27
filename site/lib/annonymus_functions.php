@@ -19,7 +19,6 @@ class annonymus_functions
 }// End of getRealIpAddr
 
 	public static function is_asynchronous(){
-		var_dump(apache_request_headers());
 		if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH']==strtolower('xmlhttprequest')){
 			//var_dump($_SERVER);
 			// If this conditions are satisfied then we know that they are the Ajax Request.
@@ -27,7 +26,7 @@ class annonymus_functions
 
 		}
 		
-		echo "Non Ajax Request";
+		//echo "Non Ajax Request";
 	}// End of function check_for_ajax 
 
 }// End of class annonymus Function 

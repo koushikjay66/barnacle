@@ -7,13 +7,16 @@ class controller
 {
 	protected $model;
 	protected $view;
-	protected $view_array;
+	private $view_array;
+	private $child;
+
 	function __construct($model_name)
 	{
 		$str = "model_".$model_name;
-		echo $str;
 		$this->model = new $str();
+		$this->view_array= array();
 		$this->view=new view();
+		$this->child=$model_name;
 	}// end of constructor function 
 
 
@@ -35,8 +38,17 @@ class controller
 		header("Location: ".$url);
 
 	}// ENd of function redirec5t
+
+	protected function set_view($view_name){
+		array_push($this->view_array, $this->child."/".$view_name);
+
+	}
+	
 	protected function view_loader()
 	{
-		$this->view->render();
+		for ($i=0; $i < sizeof($this->view_array); $i++) { 
+			$this->view->render($this->view_array[$i]);
+		}
 	}// End of function view_loader
-}
+
+}// End of class

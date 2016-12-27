@@ -104,9 +104,15 @@ class post extends controller
 
 	}// End of function draft
 
+	public static function upload(){
 
-	public function load_rendered_view(){
 
+	}// End of class upload
 
-	}// End of function 
+	public function view_loader(){
+
+		parent::view_loader();
+	}  
+
+	
 }

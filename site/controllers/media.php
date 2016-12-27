@@ -9,6 +9,7 @@ class media extends controller
 	function __construct()
 	{
 		parent::__construct(__CLASS__);
+		echo "ami constructor media";
 	}
 
 

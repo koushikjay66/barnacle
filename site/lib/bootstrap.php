@@ -54,6 +54,7 @@ class bootstrap
 			define("IF_AJAX",if_ajax($ajax_class));
 		}
 		
+		
 		if(IF_AJAX){
 			global $ROUTEAjax;
 			require 'controllers/'.$url[0].'.php';

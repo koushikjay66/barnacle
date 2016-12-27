@@ -23,7 +23,7 @@ class media extends controller
 	* Output : Sends Media link in view Format to ajax
 	*/
 	public static function upload(){
-
+		echo "Hi, I am upload from Media class";
 
 	}// Upload all the files here
 
@@ -41,7 +41,7 @@ class media extends controller
 	private function get_media_uri($media_id){
 
 
-	}// ENd of get_media_uri
+	}// End of get_media_uri
 
 		/**
 	*This must be present in all the things.

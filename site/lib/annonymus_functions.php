@@ -23,6 +23,7 @@ class annonymus_functions
 			//var_dump($_SERVER);
 			// If this conditions are satisfied then we know that they are the Ajax Request.
 			echo "Ajax found";
+			echo "<br><br>";
 
 		}
 		

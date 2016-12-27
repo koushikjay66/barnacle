@@ -6,7 +6,7 @@ if (! defined('LANDING_PAGE')) exit('No direct script access allowed');
 */
 
 class bootstrap
-{
+{	
 
 	private $get_keys;
 	public $client_ip;
@@ -14,7 +14,7 @@ class bootstrap
 	function __construct()
 	{	
 		$this->client_ip=(new annonymus_functions())->getRealIpAddr();
-		echo "<h1>".annonymus_functions::is_asynchronous()."</h1>";
+
 		
 		if(isset($_GET['url'])){
 
@@ -49,9 +49,18 @@ class bootstrap
 
 	private function ignite($url){
 		//echo "Now Ready to call my method";
-
-
-		if(file_exists("controllers/".$url[0].".php")){
+		if(isset($url[1])){
+			$ajax_class=$url[0]."/".$url[1];
+			define("IF_AJAX",if_ajax($ajax_class));
+		}
+		
+		if(IF_AJAX){
+			global $ROUTEAjax;
+			require 'controllers/'.$url[0].'.php';
+			call_user_func($ROUTEAjax[$ajax_class]);
+			
+		}
+		else if(file_exists("controllers/".$url[0].".php")){
 
 			// Now Finally it is time to call the Class
 			$c= new $url[0]($this->parse());
@@ -67,6 +76,7 @@ class bootstrap
 				}
 
 			}
+
 			$c->view_loader();
 
 		}else{

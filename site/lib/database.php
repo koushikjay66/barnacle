@@ -40,6 +40,7 @@
 			return mysqli_real_escape_string($this->conn, $str);
 
 		}
+
 		public function perform_query($q){
 
 			$result=mysqli_query($this->conn, $q);
@@ -52,11 +53,11 @@
 			}
 
 
-		public function fetch_result($res){
+		public function fetch_result($sql){
+			$sql.=" LIMIT 1";
+			return mysqli_fetch_assoc($this->perform_query($sql));
 
-			return mysqli_fetch_assoc($res);
-
-		}
+		}// End of function fetch_result
 
 
 		public function fetch_multiple_result($sql){

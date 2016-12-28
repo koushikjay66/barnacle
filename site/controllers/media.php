@@ -13,7 +13,7 @@ class media extends controller
 	}
 
 
-	public static function load_propic(){
+	public static function load_propic($user_name=null){
 
 
 	}// End function load_propic

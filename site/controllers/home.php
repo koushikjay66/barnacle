@@ -6,11 +6,25 @@
 */
 class home extends controller
 {
+	private $user_name;
 	
-	
-	function __construct($user_id=null)
+	function __construct($user_name=null)
 	{
+		$this->user_name=$user_name;
 
+		if($this->user_name==session::user_name){
+			// Then I know He wants to view his profile 
+			$this->_load_self();
+
+		}else{
+
+			// He wants to view others profile
+		}
+
+
+	}// End of constructor function
+
+	private function _load_self(){
 		parent::__construct(__CLASS__);
 		$this->post_new();
 		$this->pinned();
@@ -20,8 +34,19 @@ class home extends controller
 		$this->propic();
 		$this->static_things();
 
+	}
 
-	}// End of constructor function
+	private function _load_others(){
+
+		// First Check the user it user_name Exists
+		//If not redirect to Error Page
+
+		// If user Exis load public Profile
+
+
+	}// End of function 
+
+
 
 	/*
 	* Input:
@@ -68,14 +93,6 @@ class home extends controller
 		# code...
 	}// End of function profile_info
 
-	/*
-	* Input: 
-	* Output: show profile pic
-	*/
-	public static function propic(){
-
-
-	}// End function propic
 
 	/*
 	* Input: 
@@ -85,5 +102,15 @@ class home extends controller
 	{
 		# code...
 	}// End function static_things
+
+
+	/**
+	*This must be present in all the things.
+	*/
+	public function view_loader(){
+
+		parent::view_loader();
+	}
+}
 
 }// End of class

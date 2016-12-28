@@ -10,10 +10,22 @@
 */
 class post extends controller
 {
-	
-	function __construct($subs)
+	private $user_name;
+	function __construct($user_name=null)
 	{
 		parent::__construct(__CLASS__ );
+		parent::set_view('post/index.php');
+		$this->user_name=$user_name;
+
+		if($this->user_name==session::$user_name){
+			// Then I know He wants to view his profile 
+			$this->_load_self();
+
+		}else{
+
+			// He wants to view others profile
+			$this->_load_others();
+		}
 	}// End of constructor
 
 
@@ -108,6 +120,12 @@ class post extends controller
 
 
 	}// End of class upload
+
+	private function getContributors(){
+
+		//input : post_id
+		//output : contributors user names
+	} //end of function getcontributor
 
 	public function view_loader(){
 

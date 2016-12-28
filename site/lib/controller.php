@@ -40,12 +40,12 @@ class controller
 	}// ENd of function redirec5t
 
 	protected function set_view($view_name){
-		array_push($this->view_array, $this->child."/".$view_name);
+		array_push($this->view_array, $view_name);
 
 	}
 	
 	protected function view_loader()
-	{
+	{	$this->set_view("footer/index.php");
 		for ($i=0; $i < sizeof($this->view_array); $i++) { 
 			$this->view->render($this->view_array[$i]);
 		}

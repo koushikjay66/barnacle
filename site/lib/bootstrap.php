@@ -55,7 +55,7 @@ class bootstrap
 		}
 		
 		
-		if(IF_AJAX){
+		if(isset($url[1]) && IF_AJAX){
 			global $ROUTEAjax;
 			require 'controllers/'.$url[0].'.php';
 			call_user_func($ROUTEAjax[$ajax_class]);

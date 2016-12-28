@@ -7,15 +7,15 @@
 */
 class session
 {
-	public static $user_id;
+	public  static $user_id;
+	public static $user_name;
+
 	//$user_id, $user_name=null
 	
 	function __construct(){
 
 		if (session_status() == PHP_SESSION_NONE) {
    			 session_start();
-
-   			 echo "Session Started";
 		}
 
 
@@ -26,8 +26,26 @@ class session
 
 
 	}
+
+	public function set_credential_session($user_name, $user_id){
+		if(isset($this->user_id) && $this->user_id!=null && $this->user_name!=null){
+
+			return FALSE;
+		}else{
+			$_SESSION['id']=base64_encode($user_id);
+			echo $_SESSION['id'];
+			return true;
+		}
+	}// End of function set_credential_session
+
+
+
+
 }// End of class session
 
 $session = new session();
+$session->set_credential_session("koushikjay66", "13101206");
+echo "<br>";
+
 
 

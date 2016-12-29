@@ -34,12 +34,13 @@ class bootstrap
 		}else{
 			if(isset($_SESSION['id'])){
 				// Search and Load Default User Account Page
-				$c = new home(session::user_id);
-				$c->view_loader();
+				define("IF_AJAX",false);
+				annonymus_functions::redirect(LANDING_PAGE."/".session::$user_name);
+				die();
 			}else{
 				// Load Landing Page
-
-				$landing_page=new index(self::parse());
+				define("IF_AJAX",false);
+				$landing_page=new index($this->parse());
 				$landing_page->view_loader();
 			}
 
@@ -104,6 +105,7 @@ class bootstrap
 
 
 	}
+
 	private function parse(){
 		if(isset($_GET)){
 			return $gets=$_GET;

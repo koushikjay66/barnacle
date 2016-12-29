@@ -1,20 +1,21 @@
 <?php 
 
 /**
-* 
+* tHIS IS THE DEFAULT join
 */
-class signup extends controller
+class join extends controller
 {
 	
 	function __construct()
-	{
+	{	
 		parent::__construct(__CLASS__);
-		if(isset($_POST['submit'])) 
-		{ 
-			$this->checkUser();
-	    }
+		
 
 	}
+	public function _load_constroctor_details(){
+
+
+	}// End of default _load_construcot
 
 	private function newUser(){
 
@@ -31,10 +32,18 @@ class signup extends controller
 
 	} //end of function checkUser
 
+	public function submit(){
+		if(!isset($_POST['join_submit'])){
+
+			parent::redirect(LANDING_PAGE."/join");
+		}
+		
+
+	}// End of function submit
 
 	public function view_loader(){
 
-		parent::view_loader();
+		parent::_view();
 	}  
-}
+}// End of class
 ?>

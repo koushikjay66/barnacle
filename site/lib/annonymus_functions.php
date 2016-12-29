@@ -30,4 +30,9 @@ class annonymus_functions
 		//echo "Non Ajax Request";
 	}// End of function check_for_ajax 
 
+	public static function redirect($url){
+		header("Location: ".$url);
+
+	}// ENd of function redirec5t
+
 }// End of class annonymus Function 

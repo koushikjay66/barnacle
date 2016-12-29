@@ -3,7 +3,7 @@
 /**
 * This is the main controller class
 */
-class controller
+abstract class controller
 {
 	protected $model;
 	protected $view;
@@ -19,6 +19,10 @@ class controller
 		$this->child=$model_name;
 	}// end of constructor function 
 
+	/**
+	* You must need to implement this method. In any case it is not implemented then there will be an error thrown . 
+	*/
+	abstract protected  function _load_constroctor_details(); 
 
 	/**
 	* For Some page access we need to check if the user is loggen in . If not logged in we need to send user back to 
@@ -44,11 +48,14 @@ class controller
 
 	}
 	
-	protected function view_loader()
+	protected function _view()
 	{	$this->set_view("footer/index.php");
 		for ($i=0; $i < sizeof($this->view_array); $i++) { 
 			$this->view->render($this->view_array[$i]);
 		}
 	}// End of function view_loader
+
+	abstract protected function view_loader();
+
 
 }// End of class

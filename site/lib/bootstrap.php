@@ -29,7 +29,7 @@ class bootstrap
 
 			}
 
-			self::ignite($url);
+			self::_ignite($url);
 
 		}else{
 			if(isset($_SESSION['id'])){
@@ -47,47 +47,61 @@ class bootstrap
 
 	}// End of constructor Function 
 
-	private function ignite($url){
-		//echo "Now Ready to call my method";
-		if(isset($url[1])){
+	private function _ignite($url){
+		if(isset($url[1]) && $url[1]!=null){
 			$ajax_class=$url[0]."/".$url[1];
 			define("IF_AJAX",if_ajax($ajax_class));
-		}
-		
-		
-		if(isset($url[1]) && IF_AJAX){
-			global $ROUTEAjax;
-			require 'controllers/'.$url[0].'.php';
-			call_user_func($ROUTEAjax[$ajax_class]);
-			
-		}
-		else if(file_exists("controllers/".$url[0].".php")){
-
-			// Now Finally it is time to call the Class
-			$c= new $url[0]($this->parse());
-			if(isset($url[1])){
-				if(method_exists($c, $url[1]) && (new ReflectionMethod($c, $url[1]))->isPublic()){
-
-					$c->$url[1]();
-					$c->view_loader();
-				}
-				else{
-					echo "Error 404 Call. No Suitable method Found";
-
-				}
+			if(IF_AJAX){
+				global $ROUTEAjax;
+				require 'controllers/'.$url[0].'.php';
+				call_user_func($ROUTEAjax[$ajax_class]);
 
 			}
+		}// End of isset($url[1]) && $url[1]!=null
 
-			$c->view_loader();
+		 if(file_exists("controllers/".$url[0].".php")){
+		 	$c = new $url[0]();
+			switch (TRUE) {
+				case (isset($url[1]) && isset($url[2]) && isset($url[3])):
+					if(method_exists($c, $url[1], $url[2], $url[3]) && (new ReflectionMethod($c, $url[1], $url[2], $url[3]))->isPublic()){
 
-		}else{
+						$c->$url[1]($this->parse(), $url[2], $url[3]);
+						$c->view_loader();
+					}else{
+						echo "Method Not Found";
+					}
+					break;
+				case (isset($url[1]) && isset($url[2])):
+					if(method_exists($c, $url[1], $url[2]) && (new ReflectionMethod($c, $url[1], $url[2]))->isPublic()){
 
-			// Error 404 Call. No Suitable method Found
-			echo "Error 404 Call. No Suitable class Found";
-		}
+						$c->$url[1]($this->parse(), $url[2]);
+						$c->view_loader();
+					}else{
+						echo "Method Not Found";
+					}
+					
+					break;
+				case(isset($url[1])):
 
-	}// End of function ignite
+					if(method_exists($c, $url[1]) && (new ReflectionMethod($c, $url[1]))->isPublic()){
 
+						$c->$url[1]($this->parse());
+						$c->view_loader();
+					}else{
+						echo "Method Not Found";
+					}
+
+					break;
+				default:
+					$c->_load_constroctor_details();
+					echo "Only Constructor ran";
+					break;
+			}
+
+		}// End of 
+
+
+	}
 	private function parse(){
 		if(isset($_GET)){
 			return $gets=$_GET;

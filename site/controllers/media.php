@@ -49,6 +49,6 @@ class media extends controller
 	*/
 	public function view_loader(){
 
-		parent::view_loader();
+		parent::_view();
 	}
 }

@@ -10,19 +10,24 @@ class index extends controller
 	{
 
 		parent::__construct(__CLASS__);
-		parent::set_view("index/index.php");
-		$this->most_view_projects();
+		//parent::set_view('index', __CLASS__.'/index.php');
+		//$this->most_view_projects();
 		$this->static_contents();
 	}// End of constructor function
 
+	public function _load_constroctor_details(){
+
+
+	}
+
 	private function most_view_projects(){
 
-		parent::set_view("index/most_view/index.php");
+		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
 	}// End of function mose_view_projects
 	
 	private function static_contents(){
 		$this->view->araf="Araf Iftekhar Adnan";
-		parent::set_view("index/static_things/index.php");
+		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
 	}// End of function static contents
 
 	/**
@@ -30,6 +35,7 @@ class index extends controller
 	*/
 	public function view_loader(){
 
-		parent::view_loader();
-	}
+		parent::_view();
+
+	}// End of view_loader
 }

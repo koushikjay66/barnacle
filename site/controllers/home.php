@@ -68,7 +68,7 @@ class home extends controller
 	* Input:
 	* Output: show view of post a new story
 	*/
-	public  function post_new()
+	public function post_new()
 	{
 		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
 	}// End of function post_new
@@ -79,7 +79,11 @@ class home extends controller
 	*/
 	public  function pinned()
 	{
-		# code...
+		$pinned = $this->model->pinned($this->user_name);
+		
+
+		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
+
 	}// End of function pinned
 
 	/*

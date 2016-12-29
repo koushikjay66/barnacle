@@ -9,12 +9,12 @@ abstract class controller
 	protected $view;
 	private $view_array;
 	private $child;
-
+	private $class_name;
 	function __construct($model_name)
-	{
+	{	
 		$str = "model_".$model_name;
 		$this->model = new $str();
-		$this->view_array= array();
+		//$this->view_array= array();
 		$this->view=new view();
 		$this->child=$model_name;
 	}// end of constructor function 
@@ -43,16 +43,26 @@ abstract class controller
 
 	}// ENd of function redirec5t
 
-	protected function set_view($view_name){
-		array_push($this->view_array, $view_name);
+	protected function set_view($view_name, $view_file_location){
+		$this->view_array[$view_name]=$view_file_location;
+		//array_push($this->view_array, $view_name);
 
 	}
 	
 	protected function _view()
-	{	$this->set_view("footer/index.php");
-		for ($i=0; $i < sizeof($this->view_array); $i++) { 
-			$this->view->render($this->view_array[$i]);
+	{	$this->set_view("footer",'footer/index.php');
+
+		if(IF_AJAX){
+			unset($this->view_array['header']);
+			unset($this->view_array['footer']);
 		}
+
+		foreach ($this->view_array as $key => $value) {
+			$this->view->render($value);
+		}
+		// for ($i=0; $i < sizeof(array_keys(sizeof($this->view_array))); $i++) { 
+		// 	$this->view->render($this->view_array[]);
+		// }
 	}// End of function view_loader
 
 	abstract protected function view_loader();

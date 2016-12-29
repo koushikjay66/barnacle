@@ -17,12 +17,12 @@ class index extends controller
 
 	private function most_view_projects(){
 
-		parent::set_view("index/most_view.php");
+		parent::set_view("index/most_view/index.php");
 	}// End of function mose_view_projects
 	
 	private function static_contents(){
 		$this->view->araf="Araf Iftekhar Adnan";
-		parent::set_view("index/static_things.php");
+		parent::set_view("index/static_things/index.php");
 	}// End of function static contents
 
 	/**

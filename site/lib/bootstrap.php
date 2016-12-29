@@ -60,6 +60,7 @@ class bootstrap
 		}// End of isset($url[1]) && $url[1]!=null
 
 		 if(file_exists("controllers/".$url[0].".php")){
+		 	define("IF_AJAX",false);
 		 	$c = new $url[0]();
 			switch (TRUE) {
 				case (isset($url[1]) && isset($url[2]) && isset($url[3])):
@@ -94,6 +95,7 @@ class bootstrap
 					break;
 				default:
 					$c->_load_constroctor_details();
+					$c->view_loader();
 					echo "Only Constructor ran";
 					break;
 			}

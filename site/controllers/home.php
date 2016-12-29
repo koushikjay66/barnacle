@@ -7,23 +7,33 @@
 class home extends controller
 {
 	private $user_name;
-	
 	function __construct($user_name=null)
 	{
-		$this->user_name=$user_name;
+		parent::__construct(__CLASS__);
+		parent::set_view('header','header/index.php');
 
-		if($this->user_name==session::$user_name){
-			// Then I know He wants to view his profile 
-			$this->_load_self();
+		$this->user_posts();
+		// $this->user_name=$user_name;
 
-		}else{
+		// if($this->user_name==session::$user_name){
+		// 	// Then I know He wants to view his profile 
+		// 	$this->_load_self();
 
-			// He wants to view others profile
-			$this->_load_others();
-		}
+		// }else{
+
+		// 	// He wants to view others profile
+		// 	$this->_load_others();
+		// }
 
 
 	}// End of constructor function
+
+	/*
+	*This is the abstract method where constructor is called directly
+	*/
+	public function _load_constroctor_details(){
+		
+	}// End of _load_constroctor_details function
 
 	private function _load_self(){
 		parent::__construct(__CLASS__);
@@ -58,16 +68,16 @@ class home extends controller
 	* Input:
 	* Output: show view of post a new story
 	*/
-	public static function()
+	public  function post_new()
 	{
-		# code...
+		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
 	}// End of function post_new
 
 	/*
 	* Input:
 	* Output: show view of pinned posts
 	*/
-	public static function pinned()
+	public  function pinned()
 	{
 		# code...
 	}// End of function pinned
@@ -76,7 +86,7 @@ class home extends controller
 	* Input:
 	* Output: show view of trending posts
 	*/
-	public static function trending()
+	public  function trending()
 	{
 		# code...
 	}// End of function trending
@@ -85,7 +95,7 @@ class home extends controller
 	* Input:
 	* Output: show view of newsfeed
 	*/
-	public static function newsfeed()
+	public  function newsfeed()
 	{
 		# code...
 	}// End of function newsfeed
@@ -94,7 +104,7 @@ class home extends controller
 	* Input:
 	* Output: show profile infos like name, dob, bio 
 	*/
-	public static function self_profile_info()
+	public  function self_profile_info()
 	{
 		# code...
 	}// End of function profile_info
@@ -113,21 +123,21 @@ class home extends controller
 	* Input:
 	* Output: show view of that user's posts
 	*/
-	public static function user_posts()
+	public  function user_posts()
 	{
-		# code...
+		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
 	}// End of function trending
 
 	/*
 	* Input:
 	* Output: show profile infos like name, dob, bio 
 	*/
-	public static function other_profile_info()
+	public  function other_profile_info()
 	{
 		# code...
 	}// End of function profile_info
 
-	public static function update_profile(){
+	public  function update_profile(){
 
 		//input : fields needed to be updated
 		// ouput :
@@ -136,12 +146,13 @@ class home extends controller
 
 
 
+
 	/**
 	*This must be present in all the things.
 	*/
 	public function view_loader(){
 
-		parent::view_loader();
+		parent::_view();
 	}
 
 

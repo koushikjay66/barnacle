@@ -7,7 +7,7 @@
 */
 class session
 {
-	public  static $user_id;
+	public static $user_id;
 	public static $user_name;
 
 	//$user_id, $user_name=null
@@ -34,9 +34,13 @@ class session
 		}else{
 			$_SESSION['id']=base64_encode($user_id);
 			echo $_SESSION['id'];
+			$_SESSION['user_name']=base64_encode();
 			return true;
+
 		}
 	}// End of function set_credential_session
+
+	public function 
 
 
 
@@ -46,4 +50,5 @@ class session
 $session = new session();
 $session->set_credential_session("koushikjay66", "13101206");
 echo "<br>";
+$session = new session()
 

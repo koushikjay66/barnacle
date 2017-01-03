@@ -6,3 +6,4 @@
 	require_once 'lib/route.php';
 	require_once 'lib/session.php';
 	$bootstrap =new bootstrap();
+        

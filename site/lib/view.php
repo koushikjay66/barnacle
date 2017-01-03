@@ -1,5 +1,5 @@
 <?php
-
+namespace view;
 /**
 * This is the main view class 
 */

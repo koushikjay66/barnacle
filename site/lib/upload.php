@@ -1,5 +1,5 @@
 <?php
-
+namespace lib;
 
 /**
 * This is the Default CLASS

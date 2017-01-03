@@ -1,9 +1,12 @@
-<?php 
-	session_start();
-
-	require_once 'lib/init.php';
-	require_once 'lib/config.php';
-	require_once 'lib/route.php';
-	require_once 'lib/session.php';
+<?php
+        session_start();
+        use lib\bootstrap as bootstrap;
+        
+	require_once 'config/server_paths.php';
+        
+        require_once 'config/db_config.php';
+	
+	require_once 'config/route.php';
+        require_once 'config/init.php';
 	$bootstrap =new bootstrap();
         

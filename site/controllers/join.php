@@ -1,5 +1,5 @@
 <?php 
-
+namespace controllers;
 /**
 * tHIS IS THE DEFAULT join
 */

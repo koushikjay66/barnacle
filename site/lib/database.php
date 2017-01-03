@@ -1,161 +1,147 @@
 <?php
+   namespace lib;
+class database {
 
+    private $conn;
+    public $table_schema;
 
-	class database{
-		private $conn;
-		public $table_schema;
-			public function  __construct(){
-				$this->openConnection();
+    public function __construct() {
+        $this->openConnection();
+    }
 
-		}
+    public function openConnection() {
 
+        $this->conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS);
 
+        if (!$this->conn) {
+            die("Database Connection failed " . mysqli_connect_error());
+        } else {
+            $select_db = mysqli_select_db($this->conn, DB_NAME);
 
-		public function openConnection(){
+            if (!$select_db) {
+                die("Database Selection Problem " . mysqli_error());
+            }
+        }
+    }
 
-			$this->conn=mysqli_connect(DB_HOST, DB_USER, DB_PASS);
+    public function closeConnection() {
+        if (isset($this->conn)) {
+            mysqli_close($this->conn);
+            unset($this->conn);
+        }
+    }
 
-			if (!$this->conn) {
-				die("Database Connection failed ".mysqli_connect_error());
-			}
+    public function poof($str) {
 
-			else{
-				$select_db=mysqli_select_db($this->conn, DB_NAME);
+        return mysqli_real_escape_string($this->conn, $str);
+    }
 
-				if (!$select_db) {
-					die("Database Selection Problem ". mysqli_error());
-				}
-			}
-		}
+    public function perform_query($q) {
 
-		public function closeConnection(){
-			if (isset($this->conn)) {
-				mysqli_close($this->conn);
-				unset($this->conn);
-			}
-		}
+        $result = mysqli_query($this->conn, $q);
 
-		public function poof($str){
+        if (!$result) {
+            die("There was an error With The Result " . mysqli_error());
+        }
 
-			return mysqli_real_escape_string($this->conn, $str);
+        return $result;
+    }
 
-		}
+    public function fetch_result($sql) {
+        $sql .= " LIMIT 1";
+        return mysqli_fetch_assoc($this->perform_query($sql));
+    }
 
-		public function perform_query($q){
+// End of function fetch_result
 
-			$result=mysqli_query($this->conn, $q);
+    public function fetch_multiple_result($sql) {
 
-				if (!$result) {
-				die("There was an error With The Result ".mysqli_error());
-				}
+        $result1 = mysqli_query($this->conn, $sql);
 
-					return $result;
-			}
+        $k = array_keys(self::fetch_result($result1));
+        mysqli_free_result($result1);
 
+        $result = mysqli_query($this->conn, $sql);
 
-		public function fetch_result($sql){
-			$sql.=" LIMIT 1";
-			return mysqli_fetch_assoc($this->perform_query($sql));
+        $arr = array();
+        $count = 0;
 
-		}// End of function fetch_result
+        while ($row = mysqli_fetch_assoc($result)) {
 
 
-		public function fetch_multiple_result($sql){
+            for ($i = 0; $i < sizeof($k); $i++) {
 
-			$result1=mysqli_query($this->conn, $sql);
+                $arr[$k[$i]][$count] = $row[$k[$i]];
+            }
+            $count++;
+        }
 
-			$k=array_keys(self::fetch_result($result1));
-			mysqli_free_result($result1);
+        return $arr;
+    }
 
-				$result=mysqli_query($this->conn, $sql);
+// End of fetch_multiple_result
 
-			$arr=array();
-			$count=0;
+    public function last_insertedid() {
 
-			while($row=mysqli_fetch_assoc($result)) {
+        return mysqli_insert_id($this->conn);
+    }
 
+    public function num_rows($result) {
 
-				for ($i=0; $i <sizeof($k); $i++) {
+        return mysqli_num_rows($result);
+    }
 
-					$arr[$k[$i]][$count]=$row[$k[$i]];
-				}
-				$count++;
-			}
+    private function table_schema() {
+        $table_schema;
 
-			return $arr;
-		}// End of fetch_multiple_result
+        $res = $this->fetch_multiple_result($this->perform_query("SHOW TABLES"));
 
+        for ($i = 0; $i < sizeof($res['Tables_in_' . DB_NAME]); $i++) {
 
-		public function last_insertedid(){
+            $sql = "DESCRIBE {$res["Tables_in_" . DB_NAME][$i]}";
 
-			return mysqli_insert_id($this->conn);
+            $table_description = self::fetch_multiple_result(self::perform_query($sql));
 
-		}
 
-		public function num_rows($result){
+            for ($k = 0; $k < sizeof($table_description['Field']); $k++) {
+                $table_schema[$res["Tables_in_" . DB_NAME][$i]][$k] = $table_description["Field"][$k];
+            }
+        }
 
-			return mysqli_num_rows($result);
+        return $table_schema;
+    }
 
-		}
+    public function update($arr, $conditions) {
 
+        $table_names = array_keys($arr);
+        $condition_names = array_keys($conditions);
 
-		private function table_schema(){
-			$table_schema;
+        for ($i = 0; $i < sizeof($table_names); $i++) {
+            $table_info = self::fetch_result(self::perform_query("DESCRIBE '{$table_names[i]}'"));
 
-			$res=$this->fetch_multiple_result($this->perform_query("SHOW TABLES"));
+            // The below for loop is for query building
 
-			for ($i=0; $i <sizeof($res['Tables_in_'.DB_NAME]) ; $i++) {
+            $sql = "UPDATE '{$arr[$table_names[$i]]}' SET ";
+            for ($j = 0; $j < sizeof($table_info['Field']); $j++) {
 
-				$sql="DESCRIBE {$res["Tables_in_".DB_NAME][$i]}";
+                $sql .= "{$table_info['Field'][$j]} = '{$arr[$i][$j]}' ";
+            }
+            $sql .= " where";
+            for ($k = 0; $k < sizeof($conditions); $k++) {
+                if ($k + 1 == sizeof($conditions)) {
 
-				$table_description=self::fetch_multiple_result(self::perform_query($sql));
+                    $sql .= "' {$condition_names[$k]}' = '{$conditions[$condition_names[$k]]}'";
+                } else {
 
+                    $sql .= "' {$condition_names[$k]}' = '{$conditions[$condition_names[$k]]}' AND";
+                }
+            }
 
-				for ($k=0; $k <sizeof($table_description['Field']) ; $k++) {
-					$table_schema[$res["Tables_in_".DB_NAME][$i]][$k]=$table_description["Field"][$k];
-				}
+            self::perform_query($sql);
+        }
+    }
 
-			}
+}
 
-			return $table_schema;
-		}
-
-		public function update($arr, $conditions){
-
-		    $table_names=array_keys($arr);
-		    $condition_names=array_keys($conditions);
-
-		    for ($i=0; $i <sizeof($table_names) ; $i++) {
-		        $table_info=self::fetch_result(self::perform_query("DESCRIBE '{$table_names[i]}'"));
-
-		        // The below for loop is for query building
-
-		        $sql="UPDATE '{$arr[$table_names[$i]]}' SET ";
-		        for ($j=0; $j <sizeof($table_info['Field']) ; $j++) {
-
-		          $sql.="{$table_info['Field'][$j]} = '{$arr[$i][$j]}' ";
-
-		        }
-		        $sql.=" where";
-		        for ($k=0; $k <sizeof($conditions) ; $k++) {
-		          if ($k+1==sizeof($conditions)) {
-
-		            $sql.="' {$condition_names[$k]}' = '{$conditions[$condition_names[$k]]}'";
-
-		          }else{
-
-		            $sql.="' {$condition_names[$k]}' = '{$conditions[$condition_names[$k]]}' AND";
-
-		          }
-		        }
-
-		        self::perform_query($sql);
-		    }
-	  }
-
-
-
-	}//END OF WHOLE CLASS
-
-
- ?>
+//END OF WHOLE CLASS
+?>

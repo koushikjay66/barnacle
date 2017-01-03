@@ -1,8 +1,17 @@
 <?php
+namespace lib;
 
-if (!defined('LANDING_PAGE'))
+use lib\annonymus_functions as annonymus_functions;
+
+use controllers\index as index;
+use controllers\join as join;
+
+
+
+if (!defined('LANDING_PAGE')){
     exit('No direct script access allowed');
-    require 'Exceptions/E_404.php';
+}
+require 'Exceptions/E_404.php';
 /**
  * This is the Bootstrap Class where All the URL Construction Logic Works
  */

@@ -1,5 +1,5 @@
 <?php
-
+namespace lib;
 /**
 * This is the main controller class
 */

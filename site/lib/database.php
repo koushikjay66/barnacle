@@ -46,7 +46,7 @@
 			$result=mysqli_query($this->conn, $q);
 
 				if (!$result) {
-				die("There was an error With The Result ".mysqli_error());
+				die("There was an error With The Result ".mysqli_error($this->conn));
 				}
 
 					return $result;
@@ -61,13 +61,17 @@
 
 
 		public function fetch_multiple_result($sql){
-
+			/*
+			* MADE CHANGE HERE
+			*----------------Previously on line 71,72,73--------------*,
 			$result1=mysqli_query($this->conn, $sql);
-
 			$k=array_keys(self::fetch_result($result1));
 			mysqli_free_result($result1);
+			*/
 
-				$result=mysqli_query($this->conn, $sql);
+			$k=array_keys(self::fetch_result($sql));
+
+			$result=mysqli_query($this->conn, $sql);
 
 			$arr=array();
 			$count=0;

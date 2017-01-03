@@ -15,4 +15,4 @@ class view
 
 		require "views/".$name;
 	}
-}
+}// End of class 

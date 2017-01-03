@@ -26,5 +26,10 @@ class follow extends controller
 	public function view_loader(){
 
 		parent::view_loader();
-	}  
-?>
+	}
+
+    protected function _load_constroctor_details() {
+        
+    }
+
+}

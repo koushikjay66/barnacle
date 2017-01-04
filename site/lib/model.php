@@ -1,5 +1,6 @@
 <?php
-namespace model;
+namespace lib;
+use lib\database as database;
 
 /**
 * This is the mother model class

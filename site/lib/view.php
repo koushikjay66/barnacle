@@ -1,18 +1,20 @@
 <?php
-namespace view;
+
+namespace lib;
+
 /**
-* This is the main view class 
-*/
-class view
-{
-	
-	function __construct()
-	{
-		
-	}
+ * This is the main view class 
+ */
+class view {
 
-	public function render($name){
+    function __construct() {
+        
+    }
 
-		require "views/".$name;
-	}
-}// End of class 
+    public function render($name) {
+        require "views/" . $name;
+    }
+
+}
+
+// End of class 

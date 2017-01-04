@@ -1,31 +1,32 @@
 <?php
+
 namespace lib;
 
 use lib\annonymus_functions as annonymus_functions;
+use controllers;
+use lib\Exceptions\E_404 as E_404;
 
-use controllers\index as index;
-use controllers\join as join;
-
-
-
-if (!defined('LANDING_PAGE')){
+if (!defined('LANDING_PAGE')) {
     exit('No direct script access allowed');
 }
 require 'Exceptions/E_404.php';
+
 /**
  * This is the Bootstrap Class where All the URL Construction Logic Works
  */
 class bootstrap {
 
+    private $namse_space = "controllers\\";
     private $get_keys;
     public $client_ip;
     private $url;
+
     function __construct() {
         $this->client_ip = (new annonymus_functions())->getRealIpAddr();
-        
+
 
         if (isset($_GET['url'])) {
-            $this->url=$_GET['url'];
+            $this->url = $_GET['url'];
             unset($_GET['url']);
             $url = explode("/", trim($this->url));
 
@@ -34,12 +35,11 @@ class bootstrap {
                 unset($url[sizeof($url) - 1]);
             }
 
-           try{
+            try {
                 self::_ignite($url);
-           }catch(E_404 $e){
-               $e->message($this->url);
-               
-           }
+            } catch (E_404 $e) {
+                $e->message($this->url);
+            }
         } else {
             if (isset($_SESSION['id'])) {
                 // Search and Load Default User Account Page
@@ -49,7 +49,7 @@ class bootstrap {
             } else {
                 // Load Landing Page
                 define("IF_AJAX", false);
-                $landing_page = new index($this->parse());
+                $landing_page = new controllers\index($this->parse());
                 $landing_page->view_loader();
             }
         }
@@ -58,19 +58,20 @@ class bootstrap {
 // End of constructor Function 
 
     private function _ignite($url) {
-        if (isset($url[1]) && $url[1] != null) {
-            $ajax_class = $url[0] . "/" . $url[1];
-            define("IF_AJAX", if_ajax($ajax_class));
-            if (IF_AJAX) {
-                global $ROUTEAjax;
-                require 'controllers/' . $url[0] . '.php';
-                call_user_func($ROUTEAjax[$ajax_class]);
-            }
-        }// End of isset($url[1]) && $url[1]!=null
+//        if (isset($url[1]) && $url[1] != null) {
+//            $ajax_class = $url[0] . "/" . $url[1];
+//            define("IF_AJAX", if_ajax($ajax_class));
+//            if (IF_AJAX) {
+//                global $ROUTEAjax;
+//                require 'controllers/' . $url[0] . '.php';
+//                call_user_func($ROUTEAjax[$ajax_class]);
+//            }
+//        }// End of isset($url[1]) && $url[1]!=null
 
         if (file_exists("controllers/" . $url[0] . ".php")) {
             define("IF_AJAX", false);
-            $c = new $url[0]();
+            $c = 'controllers\\' . $url[0];
+            $c = new $c();
             switch (TRUE) {
                 case (isset($url[1]) && isset($url[2]) && isset($url[3])):
                     if (method_exists($c, $url[1], $url[2], $url[3]) && (new ReflectionMethod($c, $url[1], $url[2], $url[3]))->isPublic()) {
@@ -83,7 +84,7 @@ class bootstrap {
                     }
                     break;
                 case (isset($url[1]) && isset($url[2])):
-                    if (method_exists($c, $url[1], $url[2]) && (new ReflectionMethod($c, $url[1], $url[2]))->isPublic()) {
+                    if (method_exists($c, $url[1], $url[2]) && (new \ReflectionMethod($c, $url[1], $url[2]))->isPublic()) {
 
                         $c->$url[1]($this->parse(), $url[2]);
                         $c->view_loader();
@@ -95,7 +96,7 @@ class bootstrap {
                     break;
                 case(isset($url[1])):
 
-                    if (method_exists($c, $url[1]) && (new ReflectionMethod($c, $url[1]))->isPublic()) {
+                    if (method_exists($c, $url[1]) && (new \ReflectionMethod($c, $url[1]))->isPublic()) {
 
                         $c->$url[1]($this->parse());
                         $c->view_loader();
@@ -112,8 +113,8 @@ class bootstrap {
                     break;
             }
         }// End of 
-        else{
-            
+        else {
+
             throw new E_404();
         }
     }

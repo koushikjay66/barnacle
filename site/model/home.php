@@ -1,11 +1,15 @@
  <?php 
+ namespace model;
+ use lib\model as model;
+ 
+ 
 if (!defined('LANDING_PAGE')) exit('No direct script access allowed');
 
 
 /**
 * 
 */
-class model_home extends model
+class home extends model
 {
 	
 	function __construct()

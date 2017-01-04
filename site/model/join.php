@@ -1,5 +1,6 @@
 <?php
-
+namespace model;
+ use lib\model as model;
 
 /**
 * 

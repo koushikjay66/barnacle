@@ -1,9 +1,10 @@
 <?php 
-
+namespace model;
+ use lib\model as model;
 	/**
 	* 
 	*/
-	class model_notification extends model
+	class notification extends model
 	{
 		
 		function __construct()

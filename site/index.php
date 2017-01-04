@@ -8,5 +8,6 @@
 	
 	require_once 'config/route.php';
         require_once 'config/init.php';
+        $session = new lib\session();
 	$bootstrap =new bootstrap();
         

@@ -10,7 +10,7 @@ class notification extends controller
 
 	function __construct()
 	{
-		parent::__construct(__CLASS__);
+		parent::__construct("notification");
 		// echo $this->getNotificationCount();
 		$this->details();
 	}// End of constructor function

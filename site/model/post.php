@@ -1,10 +1,11 @@
 <?php
-
+namespace model;
+ use lib\model as model;
 
 /**
 * This is model for post controller
 */
-class model_post extends model
+class post extends model
 {
 	
 	function __construct()

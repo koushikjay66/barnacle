@@ -67,6 +67,3 @@ final class session
 }// End of class session
 
 
-$session = new session();
-
-

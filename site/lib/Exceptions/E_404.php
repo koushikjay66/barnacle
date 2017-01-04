@@ -6,7 +6,7 @@ namespace lib\Exceptions;
  * and open the template in the editor.
  */
 
-class E_404 extends Exception {
+class E_404 extends \Exception {
 
     private $view;
 

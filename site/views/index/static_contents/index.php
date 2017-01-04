@@ -202,7 +202,7 @@ form input[type=password] {
                 <form action="http://localhost/barnacle/site/login/submit/" method="post">
                     <ul>
                         <li>
-                            <input type="text" placeholder="Username" name="user_email" />
+                            <input type="text" placeholder="Username" name="user_name" />
                         </li>
                         <li>
                             <input type="password" placeholder="Password" name="user_pass" />

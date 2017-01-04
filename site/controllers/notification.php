@@ -1,17 +1,20 @@
 <?php 
+namespace controllers;
 /**
 * 
 */
 class notification extends controller
 {
 	//$sid = $_SESSION['id'];
-	private $sid="me";
+	private $sid="10013"; // Need session id ->user_name here
 	private $notificationCount;
 
 	function __construct()
 	{
+
 		parent::__construct("notification");
 		// echo $this->getNotificationCount();
+
 		$this->details();
 	}// End of constructor function
 
@@ -22,45 +25,52 @@ class notification extends controller
 		
 	}// End of _load_constroctor_details function
 
+	/*
+	* Ajax call
+	* Output - Give the unread notification count
+	*/
 	private function getNotificationCount(){
 		$notificationCount = $this->model->notificationCount($this->sid);
 		return $notificationCount['COUNT(read_status)'];
 	}
 
 	/*
+	* Ajax Call
 	* $offset is for recieved length from browser javascript where length is initially 0
 	*/
 	public function details($offset = 0){
 		//calldetails from model notification
 		// call methods per notification type to make notifications {following,story,comment,reply}
+
 		$res = $this->model->{__FUNCTION__}($offset, $this->sid);
 		$notificationList = array();
 		$time = array();
 		$link = array();
+
 		for ($i=0; $i < sizeof($res['idNotification']); $i++) { 
-			if ($res['type'][$i] == "following") {
+			if ($res['type'][$i] == "1") { // following -> 1
 				array_push($notificationList, $this->following($res['sender'][$i]));
 				array_push($time, $res['time'][$i]);
 				array_push($link, $res['ref_link'][$i]);
 			}
-			elseif ($res['type'][$i] == "story") {
+			elseif ($res['type'][$i] == "2") { // story -> 2
 				array_push($notificationList, $this->story($res['sender'][$i]));
 				array_push($time, $res['time'][$i]);
 				array_push($link, $res['ref_link'][$i]);
 			}
-			elseif ($res['type'][$i] == "comment") {
+			elseif ($res['type'][$i] == "3") { // comment -> 3
 				array_push($notificationList, $this->comment($res['sender'][$i]));
 				array_push($time, $res['time'][$i]);
 				array_push($link, $res['ref_link'][$i]);
 			}
-			elseif ($res['type'][$i] == "reply") {
+			elseif ($res['type'][$i] == "4") { // reply -> 4
 				array_push($notificationList, $this->reply($res['sender'][$i]));
 				array_push($time, $res['time'][$i]);
 				array_push($link, $res['ref_link'][$i]);
 			}
 			
 		}
-		// var_dump($notificationList);
+		// Send variables to view
 		$this->view->notificationList = $notificationList;
 		$this->view->time = $time;
 		$this->view->link = $link;

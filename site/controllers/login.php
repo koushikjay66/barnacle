@@ -1,5 +1,5 @@
 <?php
-
+namespace controllers;
 
 /**
 * This is the default Login page Controller, User can log in or User can be redirected to login page

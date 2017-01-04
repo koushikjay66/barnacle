@@ -1,5 +1,5 @@
 <?php
-
+namespace model;
 
 /**
 * This is the mother model class

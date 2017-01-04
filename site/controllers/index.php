@@ -1,4 +1,6 @@
 <?php
+namespace controllers;
+use  lib\controller as controller;
 if (!defined('LANDING_PAGE')) exit('No direct script access allowed');
 /**
 * This is the Default Landing Page

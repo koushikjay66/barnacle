@@ -1,5 +1,5 @@
 <?php
-
+namespace controllers;
 /**
 * This is the admin cortroller class
 */

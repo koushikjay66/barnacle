@@ -1,5 +1,5 @@
 <?php
-
+namespace lib;
 
 /**
 * This session handler class handles all the session related work.

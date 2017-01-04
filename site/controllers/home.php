@@ -1,5 +1,5 @@
 <?php 
-
+namespace controllers;
 
 /**
 * URL: http://barnacle/koushikjay66

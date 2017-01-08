@@ -1,18 +1,22 @@
 <?php 
 namespace controllers;
+use lib\controller as controller;
 /**
 * 
 */
 class notification extends controller
 {
+
+
+	private $className = 'notification';
 	//$sid = $_SESSION['id'];
 	private $sid="10013"; // Need session id ->user_name here
 	private $notificationCount;
 
 	function __construct()
 	{
-
-		parent::__construct("notification");
+		
+		parent::__construct($this->className);
 		// echo $this->getNotificationCount();
 
 		$this->details();
@@ -46,54 +50,35 @@ class notification extends controller
 		$notificationList = array();
 		$time = array();
 		$link = array();
+		$_0=" ! Welcome to Barnacle.";
+		$_1=" started following you.";
+		$_2=" posted a new story.";
+		$_3=" commented on your post.";
+		$_4=" replied on your comment.";
+		$sql="UPDATE notification SET send_status = 1 WHERE idNotification IN (";
 
 		for ($i=0; $i < sizeof($res['idNotification']); $i++) { 
-			if ($res['type'][$i] == "1") { // following -> 1
-				array_push($notificationList, $this->following($res['sender'][$i]));
-				array_push($time, $res['time'][$i]);
-				array_push($link, $res['ref_link'][$i]);
+			array_push($notificationList, ($res['sender'][$i].${"_".$res['type'][$i]}));
+			array_push($time, $res['time'][$i]);
+			array_push($link, $res['ref_link'][$i]);
+			// for making sql to change send_status 
+			if ($i != sizeof($res['idNotification'])-1) {
+				$sql.= $res['idNotification'][$i].",";
 			}
-			elseif ($res['type'][$i] == "2") { // story -> 2
-				array_push($notificationList, $this->story($res['sender'][$i]));
-				array_push($time, $res['time'][$i]);
-				array_push($link, $res['ref_link'][$i]);
+			else{
+				$sql.= $res['idNotification'][$i];
 			}
-			elseif ($res['type'][$i] == "3") { // comment -> 3
-				array_push($notificationList, $this->comment($res['sender'][$i]));
-				array_push($time, $res['time'][$i]);
-				array_push($link, $res['ref_link'][$i]);
-			}
-			elseif ($res['type'][$i] == "4") { // reply -> 4
-				array_push($notificationList, $this->reply($res['sender'][$i]));
-				array_push($time, $res['time'][$i]);
-				array_push($link, $res['ref_link'][$i]);
-			}
-			
 		}
+		$sql.=")";
+		$this->model->change_send_status($sql);
 		// Send variables to view
-		$this->view->notificationList = $notificationList;
-		$this->view->time = $time;
-		$this->view->link = $link;
-		parent::set_view(__FUNCTION__, __CLASS__.'/'.__FUNCTION__.'/index.php');
+		$this->view->notificationList =& $notificationList;
+		$this->view->time =& $time;
+		$this->view->link =& $link;
+		parent::set_view(__FUNCTION__, $this->className.'/'.__FUNCTION__.'/index.php');
 
 	}
 
-	private function following($s_id){
-		//build string to show in notification
-		return $s_id." started following you.";
-	}
-	private function story($s_id){
-		//build string to show in notification
-		return $s_id." posted a new story.";		
-	}
-	private function comment($s_id){
-		//build string to show in notification
-		return $s_id." commented on your post.";
-	}
-	private function reply($s_id){
-		//build string to show in notification
-		return $s_id." replied on your comment.";
-	}
 
 
 /**

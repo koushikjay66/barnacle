@@ -24,6 +24,10 @@ namespace model;
 			return $this->database->fetch_multiple_result($sql);
 		}//end of details function
 
+		public function change_send_status($sql){
+			return $this->database->perform_query($sql);
+		}//end of details function
+
 	}
 
  ?>

@@ -262,9 +262,17 @@ DROP TRIGGER IF EXISTS `bootstrap_main`.`follow_AFTER_INSERT` $$
 USE `bootstrap_main`$$
 CREATE  DEFINER = CURRENT_USER TRIGGER `follow_AFTER_INSERT` AFTER INSERT ON `follow` FOR EACH ROW
 BEGIN
-INSERT INTO notification ( sender, receiver, type, ref_link, time) values ( NEW.follows, New.follow, "1", (SELECT user_name from user where iduser = NEW.follows), NEW.date);
+INSERT INTO notification ( sender, receiver, type, ref_link, time) values ( NEW.follows, NEW.follow, "1", (SELECT user_name from user where iduser = NEW.follows), NEW.date);
 END$$
 
+
+USE `bootstrap_main`$$
+DROP TRIGGER IF EXISTS `bootstrap_main`.`new_user_AFTER_INSERT` $$
+USE `bootstrap_main`$$
+CREATE  DEFINER = CURRENT_USER TRIGGER `new_user_AFTER_INSERT` AFTER INSERT ON `user` FOR EACH ROW
+BEGIN
+INSERT INTO notification ( sender, receiver, type, ref_link, time) values ( "Admin", NEW.user_name, "0",  NEW.user_name, UNIX_TIMESTAMP());
+END$$
 
 DELIMITER ;
 

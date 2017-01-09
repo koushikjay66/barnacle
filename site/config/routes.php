@@ -31,8 +31,8 @@ $route['notification'] = array(
 );
 
 
-$route['tuntuni'] = array(
-    'sample' => array('bulbuli', 0)
+$route['tester'] = array(
+    'tuntuni' => array('tuntuni', 0)
 );
 
 

@@ -15,7 +15,7 @@ class index extends controller {
     private $class_name = 'index';
 
     function __construct($arg = null) {
-
+        
         parent::__construct($this->class_name);
 
         $this->static_contents();
@@ -24,7 +24,6 @@ class index extends controller {
     public function _load_constroctor_details() {
         
     }
-
     private function most_view_projects() {
 
         parent::set_view(__FUNCTION__, $this->class_name . '/' . __FUNCTION__ . '/index.php');

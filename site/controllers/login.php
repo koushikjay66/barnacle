@@ -14,6 +14,7 @@ class login extends controller {
     function __construct() {
 
         parent::__construct("login");
+        
     }
 
     public function _load_constroctor_details() {

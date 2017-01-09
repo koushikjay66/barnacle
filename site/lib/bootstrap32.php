@@ -109,7 +109,7 @@ class bootstrap32 {
         }
         if (isset($_POST)) {
             $this->post = $_POST;
-            $class_reference->psot = $_POST;
+            $class_reference->post = $_POST;
             unset($_POST);
         }
     }

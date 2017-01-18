@@ -55,35 +55,49 @@ class bootstrap {
 
         global $route;
         $c = null;
+        /*
+         * This is for the starting position of the user inputted URL list. 
+         * If the request is from AJAX then URL link change to ajax/class_name/method/method_arg
+         * So we increase every value by One
+         */
+        $parsing_starts = 0;
+        if ($url[$parsing_starts] == 'ajax') {
+            define("IF_AJAX", true);
+            if(sizeof($url)==1){
+                echo '404';
+                die();
+            }
+            $parsing_starts++;
+            
+        }
+        if (array_key_exists($url[$parsing_starts], $route)) {
 
-
-        if (array_key_exists($url[0], $route)) {
-
-            $c = $this->name_space . $url[0];
+            $c = $this->name_space . $url[$parsing_starts];
             $c = new $c();
             $this->_extract_super_globals($c);
         } elseif (isset(session::$user_name) && session::$user_name == $url[0]) {
             $c = \controllers\home(session::$user_name);
             $this->_extract_super_globals($c);
-        } elseif ($this->user_exists($url[0])) {
+        } elseif ($this->user_exists($url[$parsing_starts])) {
             $this->_extract_super_globals();
         } else {
             throw new Exceptions\E_404();
         }
 
-        if ($c != null && sizeof($url) > 1) {
-            $method_reply = $this->check_for_method($url[0], $url[1], sizeof($url));
+        if ((defined(IF_AJAX) && $c != null && sizeof($url) > 2)|| (!defined(IF_AJAX) && $c != null && sizeof($url) > 1)) {
+            echo $url[];
+            $method_reply = $this->check_for_method($url[$parsing_starts], $url[$parsing_starts + 1], sizeof($url));
             if ($method_reply == false) {
                 throw new Exceptions\E_404();
             } else {
 
                 switch (TRUE) {
                     case ($method_reply[1] == 2):
-                        $c->$method_reply[0]($url[2], $url[3]);
+                        $c->$method_reply[0]($url[$parsing_starts++], $url[$parsing_starts + 1]);
                         $c->view_loader();
                         break;
                     case ($method_reply[1] == 1):
-                        $c->$method_reply[0]($url[2]);
+                        $c->$method_reply[0]($url[$parsing_starts++]);
                         $c->view_loader();
 
                         break;
@@ -92,7 +106,9 @@ class bootstrap {
                         $c->view_loader();
                         break;
                     default:
-                        $c->_load_constroctor_details();
+                        if (!defined("IF_AJAX")) {
+                            $c->_load_constroctor_details();
+                        }
                         $c->view_loader();
                         break;
                 }
@@ -135,6 +151,9 @@ class bootstrap {
      */
     private function check_for_method($class_name, $method_name, $arg_count) {
         global $route;
+        if (defined(IF_AJAX)) {
+            $arg_count = $arg_count--;
+        }
         $arg_count = $arg_count - 2;
         if (array_key_exists($method_name, $route[$class_name])) {
 

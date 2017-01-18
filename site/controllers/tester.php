@@ -11,9 +11,9 @@ class tester{
       
   }
   public function tuntuni(){
-      $form= new \lib\form\controller\f_controller("13101206", "WWW>GOOGLE>COM", "POST");
+      $form= new \lib\form\controller\f_controller("13101206", "WWW>GOOGLE>COM", "POST", "multipart_form_Data");
       $form->addFields("text", "jaja", "");
-      //$form->
+      
   }
   
   public function view_loader(){

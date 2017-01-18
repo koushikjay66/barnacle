@@ -22,7 +22,7 @@ class login extends controller {
     }
 
     private function signin() {
-        
+        echo 'Ta Da';
     }
 
 //end of function signin

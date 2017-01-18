@@ -2,7 +2,7 @@
 
 session_start();
 
-use lib\bootstrap32 as bootstrap;
+use lib\bootstrap as bootstrap;
 
 require_once 'config/server_paths.php';
 

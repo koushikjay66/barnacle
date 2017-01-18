@@ -2,130 +2,148 @@
 
 namespace lib;
 
-use lib\annonymus_functions as annonymus_functions;
-use controllers;
-use lib\Exceptions\E_404 as E_404;
-
-if (!defined('LANDING_PAGE')) {
-    exit('No direct script access allowed');
-}
-require 'Exceptions/E_404.php';
-
-/**
- * This is the Bootstrap Class where All the URL Construction Logic Works
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
+
+
+if (!defined("LANDING_PAGE")) {
+    die('No Direct Access is allowed');
+}
+
 class bootstrap {
 
-    private $namse_space = "controllers\\";
-    private $get_keys;
+    private $name_space = "controllers\\";
     public $client_ip;
     private $url;
+    private $get = null;
+    private $post = null;
 
     function __construct() {
-        $this->client_ip = (new annonymus_functions())->getRealIpAddr();
-
-
+        $this->client_ip = (new \lib\annonymus_functions())->getRealIpAddr();
         if (isset($_GET['url'])) {
             $this->url = $_GET['url'];
             unset($_GET['url']);
-            $url = explode("/", trim($this->url));
+            $this->url = explode("/", trim($this->url));
 
-            if ($url[sizeof($url) - 1] == "") {
+            /**
+             *  if there is an trailing /, We need to remove it
+             */
+            if ($this->url[sizeof($this->url) - 1] == "") {
 
-                unset($url[sizeof($url) - 1]);
+                unset($this->url[sizeof($this->url) - 1]);
             }
-
             try {
-                self::_ignite($url);
-            } catch (E_404 $e) {
-                $e->message($this->url);
+
+                $this->_ignite($this->url);
+            } catch (lib\Exceptions\E_404 $e) {
+
+                echo 'Ha Ha ';
             }
+        } elseif (isset(session::$user_id) && !isset($_GET['url'])) {
+
+            $c = new \controllers\home(session::$user_name);
         } else {
-            if (isset($_SESSION['id'])) {
-                // Search and Load Default User Account Page
-                define("IF_AJAX", false);
-                annonymus_functions::redirect(LANDING_PAGE . "/" . session::$user_name);
-                die();
-            } else {
-                // Load Landing Page
-                define("IF_AJAX", false);
-                $landing_page = new controllers\index($this->parse());
-                $landing_page->view_loader();
-            }
+
+            $c = new \controllers\index();
         }
     }
 
-// End of constructor Function 
+    public function _ignite(& $url) {
 
-    private function _ignite($url) {
-//        if (isset($url[1]) && $url[1] != null) {
-//            $ajax_class = $url[0] . "/" . $url[1];
-//            define("IF_AJAX", if_ajax($ajax_class));
-//            if (IF_AJAX) {
-//                global $ROUTEAjax;
-//                require 'controllers/' . $url[0] . '.php';
-//                call_user_func($ROUTEAjax[$ajax_class]);
-//            }
-//        }// End of isset($url[1]) && $url[1]!=null
+        global $route;
+        $c = null;
 
-        if (file_exists("controllers/" . $url[0] . ".php")) {
-            define("IF_AJAX", false);
-            $c = 'controllers\\' . $url[0];
+
+        if (array_key_exists($url[0], $route)) {
+
+            $c = $this->name_space . $url[0];
             $c = new $c();
-            switch (TRUE) {
-                case (isset($url[1]) && isset($url[2]) && isset($url[3])):
-                    if (method_exists($c, $url[1], $url[2], $url[3]) && (new ReflectionMethod($c, $url[1], $url[2], $url[3]))->isPublic()) {
+            $this->_extract_super_globals($c);
+        } elseif (isset(session::$user_name) && session::$user_name == $url[0]) {
+            $c = \controllers\home(session::$user_name);
+            $this->_extract_super_globals($c);
+        } elseif ($this->user_exists($url[0])) {
+            $this->_extract_super_globals();
+        } else {
+            throw new Exceptions\E_404();
+        }
 
-                        $c->$url[1]($this->parse(), $url[2], $url[3]);
+        if ($c != null && sizeof($url) > 1) {
+            $method_reply = $this->check_for_method($url[0], $url[1], sizeof($url));
+            if ($method_reply == false) {
+                throw new Exceptions\E_404();
+            } else {
+
+                switch (TRUE) {
+                    case ($method_reply[1] == 2):
+                        $c->$method_reply[0]($url[2], $url[3]);
                         $c->view_loader();
-                    } else {
-                        throw new E_404();
-                        echo "Method Not Found";
-                    }
-                    break;
-                case (isset($url[1]) && isset($url[2])):
-                    if (method_exists($c, $url[1], $url[2]) && (new \ReflectionMethod($c, $url[1], $url[2]))->isPublic()) {
-
-                        $c->$url[1]($this->parse(), $url[2]);
+                        break;
+                    case ($method_reply[1] == 1):
+                        $c->$method_reply[0]($url[2]);
                         $c->view_loader();
-                    } else {
-                        throw new E_404();
-                        echo "Method Not Found";
-                    }
 
-                    break;
-                case(isset($url[1])):
-
-                    if (method_exists($c, $url[1]) && (new \ReflectionMethod($c, $url[1]))->isPublic()) {
-
-                        $c->$url[1]($this->parse());
+                        break;
+                    case($method_reply[1] == 0):
+                        $c->{$method_reply[0]}();
                         $c->view_loader();
-                    } else {
-                        throw new E_404();
-                        echo "Method Not Found";
-                    }
-
-                    break;
-                default:
-                    $c->_load_constroctor_details();
-                    $c->view_loader();
-                    echo "Only Constructor ran";
-                    break;
+                        break;
+                    default:
+                        $c->_load_constroctor_details();
+                        $c->view_loader();
+                        break;
+                }
             }
-        }// End of 
-        else {
-
-            throw new E_404();
         }
     }
 
-    private function parse() {
+    private function _extract_super_globals($class_reference) {
+
         if (isset($_GET)) {
-            return $gets = $_GET;
+            $this->gets = $_GET;
+            $class_reference->get = $_GET;
+            unset($_GET);
         }
-        return null;
+        if (isset($_POST)) {
+            $this->post = $_POST;
+            $class_reference->post = $_POST;
+            unset($_POST);
+        }
+    }
+
+    /**
+     * 
+     * @author koushik Jay <koushikjay66 at gmail.com>
+     * @return boolean Returns true/false based on the the User Existance
+     * @param type $user_name 
+     */
+    private function user_exists($user_name) {
+
+        return false;
+    }
+
+    /**
+     * 
+     * @param type $class_name  Name of the Class that you want to check if any callable method Exists
+     * @param type $method_name Name of the Method
+     * @param type $arg_count Number of agument that particular method takes
+     * @return  mixed on success returns an array containing the number of argument and callable method name  
+     * or on failure returns false
+     */
+    private function check_for_method($class_name, $method_name, $arg_count) {
+        global $route;
+        $arg_count = $arg_count - 2;
+        if (array_key_exists($method_name, $route[$class_name])) {
+
+            if ($route[$class_name][$method_name][1] == $arg_count) {
+
+                return $method = array($route[$class_name][$method_name][0], $route[$class_name][$method_name][1]);
+            }
+        }
+        return false;
     }
 
 }
-
-//End of class

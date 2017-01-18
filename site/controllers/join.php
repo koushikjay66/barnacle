@@ -9,12 +9,13 @@ namespace controllers;
 use lib\controller as controller;
 use lib\session as session;
 use lib\form\controller\f_controller as f_controller;
+use lib\form\validator\validator as validator;
 
 /**
  * tHIS IS THE DEFAULT join
  */
 class join extends controller {
-
+    
     function __construct() {
         parent::__construct('join');
     }
@@ -31,7 +32,7 @@ class join extends controller {
         }
 
         $f = new f_controller("13101205E", "http://localhost/barnacle/join/submit/", "POST");
-
+        
         $f->addFields("email", "user_name");
         $f->addFields("password", "user_pass");
         $this->view->form_submit='13101205E';
@@ -40,7 +41,8 @@ class join extends controller {
 
     public function submit() {
         echo 'Your FOrm Has Been Submitted';
-        var_dump($this->post);
+        $v = new validator("13101205E");
+        $v->validator($this->post);
     }
 
     public function view_loader() {
@@ -49,6 +51,3 @@ class join extends controller {
     }
 
 }
-
-// End of class
-?>

@@ -1,18 +1,22 @@
 <?php
 
 namespace lib\form\controller;
+
 /*
  * 
  */
 
 use lib\session as session;
+use lib\form\form as form;
+use lib\controllers\view as view;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-class f_controller extends \lib\form\form {
+class f_controller extends form {
 
     private $form_method;
     private $instance_queue;

@@ -11,7 +11,9 @@ namespace lib\form;
 class form {
 
     protected $form_data = array();
-
+    protected $method;
+    protected $enctype;
+    
     function __construct() {
         
         $this->form_data['header'] = array();

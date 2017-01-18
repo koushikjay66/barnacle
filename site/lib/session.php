@@ -39,6 +39,14 @@ final class session
 		return null;
 
 	}// End of 
+        
+        
+        public function unset_session($session_name){
+            if(isset($_SESSION['{$session_name}'])){
+                
+                unset($_SESSION['{$session_name}']);
+            }
+        }
 
 	private function _decrypt_user(){
 		self::$user_name=base64_decode($_SESSION['id']);

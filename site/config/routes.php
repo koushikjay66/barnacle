@@ -37,7 +37,8 @@ $route['tester'] = array(
 
 $route['join'] = array(
     'login' => array('login', 0),
-    'submit' => array('submit', 0)
+    'submit' => array('submit', 0),
+    'signup' => array('signup', 0)
 );
 
 

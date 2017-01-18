@@ -35,5 +35,10 @@ $route['tester'] = array(
     'tuntuni' => array('tuntuni', 0)
 );
 
+$route['join'] = array(
+    'login' => array('login', 0),
+    'submit' => array('submit', 0)
+);
+
 
 

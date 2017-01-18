@@ -1,15 +1,16 @@
 <?php
+
 namespace model;
- use lib\model as model;
+
+use lib\model as model;
 
 /**
-* 
-*/
-class model_join extends model
-{
-	
-	function __construct()
-	{
-		
-	}
+ * 
+ */
+class join extends model {
+
+    function __construct() {
+        
+    }
+
 }

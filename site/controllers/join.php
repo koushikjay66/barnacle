@@ -1,49 +1,54 @@
-<?php 
+<?php
+
 namespace controllers;
+
+/*
+ * Useable defined namespaced
+ */
+
+use lib\controller as controller;
+use lib\session as session;
+use lib\form\controller\f_controller as f_controller;
+
 /**
-* tHIS IS THE DEFAULT join
-*/
-class join extends controller
-{
-	
-	function __construct()
-	{	
-		parent::__construct(__CLASS__);
-		
+ * tHIS IS THE DEFAULT join
+ */
+class join extends controller {
 
-	}
-	public function _load_constroctor_details(){
+    function __construct() {
+        parent::__construct('join');
+    }
 
+    public function _load_constroctor_details() {
+        
+    }
 
-	}// End of default _load_construcot
+    public function login() {
+        if (isset(session::$user_id)) {
 
-	private function newUser(){
+            parent::redirect(BASE_URL);
+            die();
+        }
 
-		//input will be the fields of registration
-		// output will be the link to the user's homepage or error message otherwise
+        $f = new f_controller("13101205E", "http://localhost/barnacle/join/submit/", "POST");
 
-	} //end of function newUser
+        $f->addFields("email", "user_name");
+        $f->addFields("password", "user_pass");
+        $this->view->form_submit='13101205E';
+        parent::set_view('login', "join/login.php");
+    }
 
-	private function checkUser(){
+    public function submit() {
+        echo 'Your FOrm Has Been Submitted';
+        var_dump($this->post);
+    }
 
-		//input is the user name
-		$this->newUser();
-		//output : "you are already registered"
+    public function view_loader() {
 
-	} //end of function checkUser
+        parent::_view();
+    }
 
-	public function submit(){
-		if(!isset($_POST['join_submit'])){
+}
 
-			parent::redirect(LANDING_PAGE."/join");
-		}
-		
-
-	}// End of function submit
-
-	public function view_loader(){
-
-		parent::_view();
-	}  
-}// End of class
+// End of class
 ?>

@@ -109,22 +109,22 @@ class new_bootstrap {
 
         if ((IF_AJAX && $c != null && sizeof($this->url) > 2) || (!IF_AJAX && $c != null && sizeof($this->url) > 1)) {
 
-            $method_reply = $this->check_for_method($this->url[$class_starts_from], $this->url[$class_starts_from + 1], sizeof($this->url));
+            $method_reply = $this->check_for_method($this->url[$class_starts_from], $this->url[$class_starts_from += 1], sizeof($this->url));
             if ($method_reply == false) {
                 throw new E_404();
             } else {
                 switch (TRUE) {
                     case ($method_reply[1] == 2):
                         $c->$method_reply[0]($url[$class_starts_from++], $url[$class_starts_from + 1]);
-                        $c->view_loader();
+
                         break;
                     case ($method_reply[1] == 1):
-                        $c->$method_reply[0]($url[$class_starts_from++]);
-                        $c->view_loader();
+                        $c->$method_reply[0]($this->url[$class_starts_from++]);
+
                         break;
                     case($method_reply[1] == 0):
                         $c->{$method_reply[0]}();
-                        $c->view_loader();
+
                         break;
                     default:
                         throw new Exceptions\E_404();
@@ -157,11 +157,13 @@ class new_bootstrap {
      */
     private function check_for_method($class_name, $method_name, $arg_count) {
         global $route;
+        if (IF_AJAX) {
+            $arg_count--;
+        }
         $arg_count = $arg_count - 2;
         if (array_key_exists($method_name, $route[$class_name])) {
 
             if ($route[$class_name][$method_name][1] == $arg_count) {
-
                 return $method = array($route[$class_name][$method_name][0], $route[$class_name][$method_name][1]);
             }
         }

@@ -18,10 +18,13 @@ class join extends controller {
 
     function __construct() {
         parent::__construct('join');
+        if(IF_AJAX){
+           
+        }
     }
 
     public function _load_constroctor_details() {
-        
+        echo 'Nothing Called';
     }
 
     public function login() {

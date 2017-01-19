@@ -69,7 +69,7 @@ class bootstrap {
             }
             $parsing_starts++;
             
-        }
+        } 
         if (array_key_exists($url[$parsing_starts], $route)) {
 
             $c = $this->name_space . $url[$parsing_starts];

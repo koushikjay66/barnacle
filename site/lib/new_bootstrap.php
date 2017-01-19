@@ -108,18 +108,18 @@ class new_bootstrap {
         }
 
         if ((IF_AJAX && $c != null && sizeof($this->url) > 2) || (!IF_AJAX && $c != null && sizeof($this->url) > 1)) {
-
+            
             $method_reply = $this->check_for_method($this->url[$class_starts_from], $this->url[$class_starts_from += 1], sizeof($this->url));
             if ($method_reply == false) {
                 throw new E_404();
             } else {
                 switch (TRUE) {
                     case ($method_reply[1] == 2):
-                        $c->$method_reply[0]($url[$class_starts_from++], $url[$class_starts_from + 1]);
+                        $c->$method_reply[0]($url[++$class_starts_from], $url[$class_starts_from + 1]);
 
                         break;
                     case ($method_reply[1] == 1):
-                        $c->$method_reply[0]($this->url[$class_starts_from++]);
+                        $c->$method_reply[0]($this->url[++$class_starts_from]);
 
                         break;
                     case($method_reply[1] == 0):

@@ -38,7 +38,9 @@ $route['tester'] = array(
 $route['join'] = array(
     'login' => array('login', 0),
     'submit' => array('submit', 0),
-    'signup' => array('signup', 0)
+    'signup' => array('signup', 0),
+    'user_email_taken' => array('user_email_taken', 1),
+    'user_name_taken' => array('user_name_taken',1)
 );
 
 

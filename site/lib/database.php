@@ -45,7 +45,6 @@ class database {
     }
 
     public function perform_query($q) {
-        echo $q;
         $result = mysqli_query($this->conn, $q);
 
         if (!$result) {

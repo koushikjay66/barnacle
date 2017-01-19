@@ -18,13 +18,10 @@ class join extends controller {
 
     function __construct() {
         parent::__construct('join');
-        if(IF_AJAX){
-           
-        }
     }
 
     public function _load_constroctor_details() {
-        echo 'Nothing Called';
+        
     }
 
     public function login() {
@@ -49,19 +46,25 @@ class join extends controller {
     }
 
     public function signup() {
+
         parent::set_view("signup_form", 'join/signup/index.php');
     }
 
     public function user_name_taken($user_name) {
-        
+        $res = $this->model->user_name_taken($user_name);
+        echo $res;
     }
 
     public function user_email_taken($user_email) {
-        
+        if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
+            echo 'false';
+            die();
+        }
+        $res = $this->model->user_email_taken($user_email);
+        echo $res;
     }
 
     public function view_loader() {
-
         parent::_view();
     }
 

@@ -97,7 +97,7 @@ class bootstrap {
                         $c->view_loader();
                         break;
                     case ($method_reply[1] == 1):
-                        $c->$method_reply[0]($url[$parsing_starts++]);
+                        $c->$method_reply[0]($url[$parsing_starts-1]);
                         $c->view_loader();
 
                         break;

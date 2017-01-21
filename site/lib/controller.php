@@ -36,13 +36,11 @@ abstract class controller {
      */
     protected function permission_checker() {
         if (!isset($_SESSION['id'])) {
-
             // Then we need to redirect user to login page
             self::redirect(LANDING_PAGE);
         }
     }
 
-// End of function permission_checker
 
     protected static function redirect($url) {
         header("Location: " . $url);

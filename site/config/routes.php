@@ -40,7 +40,12 @@ $route['join'] = array(
     'submit' => array('submit', 0),
     'signup' => array('signup', 0),
     'user_email_taken' => array('user_email_taken', 1),
-    'user_name_taken' => array('user_name_taken',1)
+    'user_name_taken' => array('user_name_taken', 1)
 );
 
+
+$route['post'] = array(
+    'view' => array('view', 1),
+    
+);
 

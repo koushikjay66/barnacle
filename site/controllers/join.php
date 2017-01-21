@@ -31,12 +31,6 @@ class join extends controller {
             die();
         }
 
-        $f = new f_controller("13101205E", "http://localhost/barnacle/join/submit/", "POST");
-
-        $f->addFields("email", "user_name");
-        $f->addFields("password", "user_pass");
-        $this->view->form_submit = '13101205E';
-        parent::set_view('login', "join/login.php");
     }
 
     public function submit() {

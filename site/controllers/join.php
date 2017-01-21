@@ -40,7 +40,7 @@ class join extends controller {
     }
 
     public function submit() {
-        echo 'Your FOrm Has Been Submitted';
+        echo 'Your Form Has Been Submitted';
         $v = new validator("13101205E");
         $v->validator($this->post);
     }
@@ -52,16 +52,27 @@ class join extends controller {
 
     public function user_name_taken($user_name) {
         $res = $this->model->user_name_taken($user_name);
-        echo $res;
+        if (IF_AJAX) {
+            echo $res;
+        } else {
+            return $res;
+        }
     }
 
     public function user_email_taken($user_email) {
         if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-            echo 'false';
-            die();
+            if (IF_AJAX) {
+                echo 'false';
+                die();
+            }
+            return false;
         }
         $res = $this->model->user_email_taken($user_email);
-        echo $res;
+        if (IF_AJAX) {
+            echo $res;
+        } else {
+            return $res;
+        }
     }
 
     public function view_loader() {

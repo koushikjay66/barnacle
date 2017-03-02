@@ -97,7 +97,9 @@ class new_bootstrap {
 
             $c = $this->name_space . $this->url[$class_starts_from];
             $c = new $c();
+            
             $this->_extract_super_globals($c);
+            
         } elseif (isset(session::$user_name) && session::$user_name == $url[$class_starts_from]) {
             $c = \controllers\home(session::$user_name);
             $this->_extract_super_globals($c);
@@ -131,7 +133,9 @@ class new_bootstrap {
                 }
             }
         }
-        if (!IF_AJAX) {
+        
+        if (!IF_AJAX && sizeof($this->url)==1) {
+            echo 'This will not be entered <br>';
             $c->_load_constroctor_details();
         }
         $c->view_loader();

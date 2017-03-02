@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 use lib\new_bootstrap as new_bootstrap;

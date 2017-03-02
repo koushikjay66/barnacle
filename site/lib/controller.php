@@ -2,8 +2,6 @@
 
 namespace lib;
 
-use model;
-
 /**
  * This is the main controller class
  */
@@ -18,12 +16,10 @@ abstract class controller {
     function __construct($class_name) {
         $str = "model\\" . $class_name;
         $this->model = new $str();
-        //$this->view_array= array();
         $this->view = new view();
         $this->child = $class_name;
     }
 
-// end of constructor function 
 
     /**
      * You must need to implement this method. In any case it is not implemented then there will be an error thrown . 
@@ -31,7 +27,7 @@ abstract class controller {
     abstract protected function _load_constroctor_details();
 
     /**
-     * For Some page access we need to check if the user is loggen in . If not logged in we need to send user back to 
+     * For Some page access we need to check if the user is logged in . If not logged in we need to send user back to 
      * the login page. 
      */
     protected function permission_checker() {

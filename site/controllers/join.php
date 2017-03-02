@@ -2,75 +2,60 @@
 
 namespace controllers;
 
-/*
- * Useable defined namespaced
- */
-
 use lib\controller as controller;
-use lib\session as session;
-use lib\form\controller\f_controller as f_controller;
-use lib\form\validator\validator as validator;
 
-/**
- * tHIS IS THE DEFAULT join
+/*
+ * @
  */
+
 class join extends controller {
 
+    private $class_name = 'join';
+
     function __construct() {
-        parent::__construct('join');
+
+        parent::__construct($this->class_name);
     }
+
+    /*
+     * This method will be called if no other method is being called by the user
+     * SO when user only types 
+     * URL: www/barnacle.com/join 
+     * it will call the _load_constructor_details
+     */
 
     public function _load_constroctor_details() {
-        
+        echo 'Nothing Called';
     }
+
+    /*
+     * Function to login in the base site 
+     */
 
     public function login() {
-        if (isset(session::$user_id)) {
+        if (isset($this->post['tuntuni'])) {
+        } else {
 
-            parent::redirect(BASE_URL);
-            die();
+            echo 'Post is not set';
         }
-
     }
 
-    public function submit() {
-        echo 'Your Form Has Been Submitted';
-        $v = new validator("13101205E");
-        $v->validator($this->post);
-    }
+    /*
+     * Function to do the signup in the base directory 
+     */
 
     public function signup() {
-
-        parent::set_view("signup_form", 'join/signup/index.php');
-    }
-
-    public function user_name_taken($user_name) {
-        $res = $this->model->user_name_taken($user_name);
-        if (IF_AJAX) {
-            echo $res;
+        if (isset($this->post['signup'])) {
+            echo $this->model->signup($this->post);
         } else {
-            return $res;
-        }
-    }
-
-    public function user_email_taken($user_email) {
-        if (!filter_var($user_email, FILTER_VALIDATE_EMAIL)) {
-            if (IF_AJAX) {
-                echo 'false';
-                die();
-            }
-            return false;
-        }
-        $res = $this->model->user_email_taken($user_email);
-        if (IF_AJAX) {
-            echo $res;
-        } else {
-            return $res;
+            $this->view->action = "http://localhost/barnacle/site/join/signup/";
+            $this->view->method = "POST";
+            $this->set_view('post', 'join/signup/index.php');
         }
     }
 
     public function view_loader() {
-        parent::_view();
+        $this->_view();
     }
 
 }

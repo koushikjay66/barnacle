@@ -33,10 +33,12 @@ class join extends controller {
      */
 
     public function login() {
-        if (isset($this->post['tuntuni'])) {
+        if (isset($this->post['login_submit'])) {
+           $this->model->login($this->post);
         } else {
-
-            echo 'Post is not set';
+            $this->set_view('login', 'join/login/index.php');
+            $this->view->action = "http://localhost/barnacle/site/login";
+            $this->view->method = "POST";
         }
     }
 

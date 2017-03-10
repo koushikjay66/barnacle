@@ -10,8 +10,8 @@ use lib\model as model;
 class join extends model {
 
     function __construct() {
-        parent::__construct();
-        echo 'La La';
+       
+       
     }
 
     /*
@@ -69,18 +69,41 @@ class join extends model {
         }
         $validator['user_id'] = $this->database->last_insertedid() + 1;
         $validator['u_password'] = $this->generate_hash($validator['u_password']);
-        $user_id = $this->database->last_insertedid();
+        $user_id = $this->database->last_insertedid()+1;
         $sql = "INSERT INTO user "
                 . "(iduser, user_name, first_name, last_name, email, password) "
                 . "values({$validator["user_id"]}, '{$validator["u_name"]}', "
                 . "'{$validator["f_name"]}', '{$validator["l_name"]}', '{$validator["u_user_name"]}', '{$validator["u_password"]}')";
 
-        $res = $this->database->fetch_result($sql);
+        $res = $this->database->perform_query($sql);
+        
         if ($res != true) {
             return 'Database Insertion Prible';
         }
 
         return true;
+    }
+
+    public function login($args) {
+        /*
+         * Like Signup we need validator Array. 
+         */
+        $validator = array('u_email' => 'Regex Here',
+            'u_password' => 'Regex Here'
+        );
+
+        foreach ($validator as $key => $value) {
+            if (key_exists($key, $args) && $this->validator($args[$key], $validator[$key])) {
+                $validator[$key] = $args[$key];
+            } else {
+                return "Please fill up the form correctly";
+            }
+        }
+        echo $validator['u_email'];
+        $valdator['u_password'] = $this->generate_hash($validator['u_password']);
+        $sql = "SELECT iduser, user_name, email FROM user where ( email='{$validator['u_email']}' OR "
+                . "user_name= '{$validator['u_email']}' ) AND password='{$valdator['u_password']}'";
+        echo $sql;
     }
 
     private function generate_hash($password) {
@@ -115,10 +138,6 @@ class join extends model {
             return false;
         }
         return true;
-    }
-
-    public function login($args) {
-        
     }
 
 }

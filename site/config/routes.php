@@ -31,8 +31,11 @@ $route['notification'] = array(
 );
 
 
-$route['tester'] = array(
-    'tuntuni' => array('tuntuni', 0)
+$route['media']=array(
+    'upload'=> array('upload', 0), 
+    'get_list' =>array('get_list', 0), 
+    'get' =>array('get', 2), 
+    'sample'=>array('sample', 1)
 );
 
 $route['join'] = array(

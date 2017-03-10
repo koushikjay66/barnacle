@@ -44,7 +44,12 @@ class media extends controller {
             $this->view->method = "POST";
             //die();
         } else {
-            $this->model->upload($this->upload_file);
+            $res=$this->model->upload($this->upload_file);
+            if(!$res){
+                echo 'Error';
+            }else{
+                return false;
+            }
         }
     }
 

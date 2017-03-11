@@ -118,6 +118,10 @@ class media extends controller {
         
         
     }
+    public function ajax_test(){
+        header("HTTP/1.1 404 Not Found");
+        echo 'Got It';
+    }
 
     public function _load_constroctor_details() {
         

@@ -1,279 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- Basic Page Needs
-  ================================================== -->
-    <meta charset="utf-8">
-    <title>Flat Login</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Mobile Specific Metas
-  ================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <!-- CSS
-  ================================================== -->
-
-    <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-</head>
-
-<style type="text/css">
-    
-@import url(http://fonts.googleapis.com/css?family=Roboto:100);
-@import url(http://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css);
-
-body {
-  background: #1a1a1a;
-  color: white;
-  font-family: 'Roboto';
-}
-.flat-form {
-  background: #e74c3c;
-  margin: 25px auto;
-  width: 390px;
-  height: 340px;
-  position: relative;
-  font-family: 'Roboto';
-}
-.tabs {
-  background: #c0392b;
-  height: 40px;
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  width: 100%;
-  position: relative;
-  display: block;
-  margin-bottom: 20px;
-}
-.tabs li {
-  display: block;
-  float: left;
-  margin: 0;
-  padding: 0;
-}
-.tabs a {
-  background: #c0392b;
-  display: block;
-  float: left;
-  text-decoration: none;
-  color: white;
-  font-size: 16px;
-  padding: 12px 22px 12px 22px;
-  /*border-right: 1px solid @tab-border;*/
-
-}
-.tabs li:last-child a {
-  border-right: none;
-  width: 174px;
-  padding-left: 0;
-  padding-right: 0;
-  text-align: center;
-}
-.tabs a.active {
-  background: #e74c3c;
-  border-right: none;
-  -webkit-transition: all 0.5s linear;
-    -moz-transition: all 0.5s linear;
-    transition: all 0.5s linear;
-}
-.form-action {
-  padding: 0 20px;
-  position: relative;
-}
-
-.form-action h1 {
-  font-size: 42px;
-  padding-bottom: 10px;
-}
-.form-action p {
-  font-size: 12px;
-  padding-bottom: 10px;
-  line-height: 25px;
-}
-form {
-  padding-right: 20px !important;
-}
-form input[type=text],
-form input[type=password],
-form input[type=submit] {
-  font-family: 'Roboto';
-}
-
-form input[type=text],
-form input[type=password] {
-  width: 100%;
-  height: 40px;
-  margin-bottom: 10px;
-  padding-left: 15px;
-  background: #fff;
-  border: none;
-  color: #e74c3c;
-  outline: none;
-}
-
-.dark-box {
-  background: #5e0400;
-  box-shadow: 1px 3px 3px #3d0100 inset;
-  height: 40px;
-  width: 50px;
-}
-.form-action .dark-box.bottom {
-  position: absolute;
-  right: 0;
-  bottom: -24px;
-}
-.tabs + .dark-box.top {
-  position: absolute;
-  right: 0;
-  top: 0px;
-}
-.show {
-  display: block;
-}
-.hide {
-  display: none;
-}
-
-.button {
-    border: none;
-    display: block;
-    background: #136899;
-    height: 40px;
-    width: 80px;
-    color: #ffffff;
-    text-align: center;
-    border-radius: 5px;
-    /*box-shadow: 0px 3px 1px #2075aa;*/
-    -webkit-transition: all 0.15s linear;
-      -moz-transition: all 0.15s linear;
-      transition: all 0.15s linear;
-}
-
-.button:hover {
-  background: #1e75aa;
-  /*box-shadow: 0 3px 1px #237bb2;*/
-}
-
-.button:active {
-  background: #136899;
-  /*box-shadow: 0 3px 1px #0f608c;*/
-}
-
-::-webkit-input-placeholder {
-  color: #e74c3c;
-}
-:-moz-placeholder {
-  /* Firefox 18- */
-  color: #e74c3c;
-}
-::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #e74c3c;
-}
-:-ms-input-placeholder {
-  color: #e74c3c;
-}
-</style>
-
-
-
-<body>
-
-    <div class="container">
-        <div class="flat-form">
-            <ul class="tabs">
-                <li>
-                    <a href="#login" class="active">Login</a>
-                </li>
-                <li>
-                    <a href="#register">Register</a>
-                </li>
-                <li>
-                    <a href="#reset">Reset Password</a>
-                </li>
-            </ul>
-            <div id="login" class="form-action show">
-                <h1>Login on barnacle</h1>
-                <form action="http://localhost/barnacle/site/login/submit/" method="post">
-                    <ul>
-                        <li>
-                            <input type="text" placeholder="Username" name="user_name" />
-                        </li>
-                        <li>
-                            <input type="password" placeholder="Password" name="user_pass" />
-                        </li>
-                        <li>
-                            <input type="submit" value="Login" class="button" name="submit_login" />
-                        </li>
-                    </ul>
-                </form>
-            </div>
-            <!--/#login.form-action-->
-            <div id="register" class="form-action hide">
-                <h1>Register</h1>
-                <form action="http://localhost/barnacle/site/join/submit" method="POST">
-                    <ul>
-                        <li>
-                            <input type="text" placeholder="First name" name="join_first_name" />
-                        </li>
-                        <li>
-                            <input type="text" placeholder="Last Name" name="join_last_name"/>
-                        </li>
-                        <li>
-                            <input type="email" placeholder="Enter Your Email" name="join_email"/>
-                        </li>
-                        <li>
-                            <input type="text" placeholder="Username" name="join_user_name"/>
-                        </li>
-                        <li>
-                            <input type="password" placeholder="Password" name="join_password"/>
-                        </li>
-                        <li>
-                            <input type="submit" value="Sign Up" class="button" name="join_submit"/>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-            <!--/#register.form-action-->
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="http://designs-barnacle.azurewebsites.net/styles/landing.css">
+      <title>Welcome to barnacle. This is My landing Page </title>
+    </head>
+   
+    <body>
+      <div class="container" id="container">
+        <div class="leftmargin">
+           <div class="wrap">
+              <div class="both">
+                  <div class="circle" id="circle">
+                     <a href="#home_div" id ="home_r" class="icon i1 icon-home" onclick="rotateFunction(this.id)">Home</a>
+                     <a href="#login_div" id = "login_r" class="icon i2 icon-login" onclick="rotateFunction(this.id)">Login</a>
+                     <a href="#about_div" id = "about_r" class="icon i3 icon-about" onclick="rotateFunction(this.id)">About</a>
+                     <a href="#register_div" id = "register_r" class="icon i4 icon-resister" onclick="rotateFunction(this.id)">Register</a>
+                      <div class="center-circle"></div>
+                      <span class="text"></span>
+                  </div>
+                  <!--ENd of circle div-->
+              </div>
+              <!--End of both div-->
+          </div>
+          <!--End of wrap div-->
         </div>
-    </div>
-    <script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-</body>
-</html>
+        <!--End of Left margin-->
 
-<script type="text/javascript">
-    
-    (function( $ ) {
-  // constants
-  var SHOW_CLASS = 'show',
-      HIDE_CLASS = 'hide',
-      ACTIVE_CLASS = 'active';
-  
-  $( '.tabs' ).on( 'click', 'li a', function(e){
-    e.preventDefault();
-    var $tab = $( this ),
-         href = $tab.attr( 'href' );
-  
-     $( '.active' ).removeClass( ACTIVE_CLASS );
-     $tab.addClass( ACTIVE_CLASS );
-  
-     $( '.show' )
-        .removeClass( SHOW_CLASS )
-        .addClass( HIDE_CLASS )
-        .hide();
-    
-      $(href)
-        .removeClass( HIDE_CLASS )
-        .addClass( SHOW_CLASS )
-        .hide()
-        .fadeIn( 550 );
-  });
-})( jQuery );
-</script>
+        <div class="rightmargin">
+          <div id="home_div" style="display:  none;">
+            <div class="home-screen">
+              <div class="app-title">
+                  <h1>home</h1>
+              </div>
+            </div>
+          </div>
+          <!--End of home div-->
+           <div id="login_div" style="display: none;">
+            <div class="login">
+              <div class="login-screen">
+                <div class="app-title">
+                  <h1>Login</h1>
+                </div>
 
+                <div class="login-form">
+                  <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="username" id="login-name">
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                  </div>
 
+                  <div class="control-group">
+                  <input type="password" class="login-field" value="" placeholder="password" id="login-pass">
+                  <label class="login-field-icon fui-lock" for="login-pass"></label>
+                  </div>
+
+                  <a class="btn btn-primary btn-large btn-block" href="#">login</a>
+                  <a class="login-link" href="#">Lost your password?</a>
+                </div>
+                  <!-- End of Login-form-->
+              </div>
+            </div>
+          </div>
+          <!--End of login div-->
+           <div id="about_div" style="display: none;">
+            <div class="about-screen">
+              <div class="app-title">
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+                <h1>About</h1>
+              </div>
+            </div> 
+           </div>
+           <!--End of about-div-->
+
+           <div id="register_div" style="display: none;">
+            <div class="register-screen" id="register-screen">
+              <div class="app-title">
+                <h1>Register</h1>
+              </div>
+              <!--End id app-title-->
+              <div class="register-form">
+
+                <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="firstname" id="login-name">
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                </div>
+                <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="lastname" id="login-name">
+                </div>
+                <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="Email" id="login-name">
+                </div>
+                <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="password" id="login-name">
+                </div>
+                <div class="control-group">
+                  <input type="text" class="login-field" value="" placeholder="confirm password" id="login-name">
+                </div>
+                <a class="btn btn-primary btn-large btn-block" href="#">register</a>
+
+              </div>
+              <!--End of register-form-->
+            </div>
+            <!--End of register-screen div-->
+           </div>
+           <!--End of register div-->
+        </div>
+        <!--End of right margin-->
+      </div>
+      <!--End of container div-->
+    </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="http://designs-barnacle.azurewebsites.net/script/main.js"></script>
+  <!--document.getElementById(content_array[calculate_count/90]).style.animation="mymove 3s ease forwards";-->
+  </html>

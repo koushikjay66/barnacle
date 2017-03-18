@@ -7,6 +7,7 @@ define("LANDING_PAGE", "http://".$_SERVER['SERVER_NAME']."/barnacle/site");
 define("BASE_URL", "http://".$_SERVER['SERVER_NAME']."/");
 define("MEDIA", BASE_URL."/media/");
 define("STORAGE", "../../../storage/media/");
+define("JOIN", BASE_URL."join/");
 
 /*
  * Our Default css/js/icons Storage links 

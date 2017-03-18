@@ -29,7 +29,7 @@ class join extends model {
 
         $validator = array('f_name' => 'Regex Here',
             'l_name' => 'l_name',
-            'u_user_name' => 'u_user_name',
+            'u_email' => 'u_user_name',
             'u_name' => 'u_name',
             'u_password' => 'u_password'
         );

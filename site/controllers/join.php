@@ -34,11 +34,12 @@ class join extends controller {
 
     public function login() {
         if (isset($this->post['login_submit'])) {
-           $this->model->login($this->post);
+           $res=$this->model->login($this->post);
+           if($res!=true){
+               echo 'There were Some Problems';
+           }
         } else {
-            $this->set_view('login', 'join/login/index.php');
-            $this->view->action = "http://localhost/barnacle/site/login";
-            $this->view->method = "POST";
+            parent::redirect(BASE_URL."#register_div");
         }
     }
 

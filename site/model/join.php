@@ -10,8 +10,7 @@ use lib\model as model;
 class join extends model {
 
     function __construct() {
-       
-       
+        
     }
 
     /*
@@ -27,11 +26,11 @@ class join extends model {
          * Just create the array 
          */
 
-        $validator = array('f_name' => 'Regex Here',
-            'l_name' => 'l_name',
-            'u_email' => 'u_user_name',
-            'u_name' => 'u_name',
-            'u_password' => 'u_password'
+        $validator = array('f_name' => '/[a-zA-Z]{3,10}/',
+            'l_name' => '/[a-zA-Z]{3,10}/',
+            'u_email' => '/^[a-z]\w*@[a-z0-9]+(\.[a-z0-9]+)*(\.[a-z]{2,3})$/',
+            'u_name' => '/^[\w]+/s',
+            'u_password' => '/[^^$]{6,20}'
         );
 
         /*
@@ -59,7 +58,7 @@ class join extends model {
          * Now checking is done ,Second step is 
          */
 
-        if (!$this->user_email_taken($validator['u_user_name'])) {
+        if (!$this->user_email_taken($validator['u_email'])) {
 
             return 'User Email address is already taken. Please choose anotehr One';
         }
@@ -69,18 +68,27 @@ class join extends model {
         }
         $validator['user_id'] = $this->database->last_insertedid() + 1;
         $validator['u_password'] = $this->generate_hash($validator['u_password']);
-        $user_id = $this->database->last_insertedid()+1;
         $sql = "INSERT INTO user "
-                . "(iduser, user_name, first_name, last_name, email, password) "
-                . "values({$validator["user_id"]}, '{$validator["u_name"]}', "
-                . "'{$validator["f_name"]}', '{$validator["l_name"]}', '{$validator["u_user_name"]}', '{$validator["u_password"]}')";
+                . "( user_name, first_name, last_name, email, password) "
+                . "values('{$validator["u_name"]}', "
+                . "'{$validator["f_name"]}', '{$validator["l_name"]}', '{$validator["u_email"]}', '{$validator["u_password"]}')";
 
         $res = $this->database->perform_query($sql);
-        
+
         if ($res != true) {
             return 'Database Insertion Prible';
         }
 
+        if ($res == null) {
+            return false;
+        }
+        $res = $this->database->fetch_result("SELECT iduser FROM user WHERE user_name='{$validator["u_name"]}' LIMIT 1");
+        if (!$res) {
+            return false;
+        }
+        global $session;
+        $session->set_credential_session($validator["u_name"], $res['iduser']);
+        \lib\annonymus_functions::redirect(BASE_URL . $validator["u_name"]);
         return true;
     }
 
@@ -88,8 +96,8 @@ class join extends model {
         /*
          * Like Signup we need validator Array. 
          */
-        $validator = array('u_email' => 'Regex Here',
-            'u_password' => 'Regex Here'
+        $validator = array('u_email' => '/^[a-z]\w*@[a-z0-9]+(\.[a-z0-9]+)*(\.[a-z]{2,3})$/',
+            'u_password' => '/[^^$]{6,20}'
         );
 
         foreach ($validator as $key => $value) {
@@ -115,8 +123,14 @@ class join extends model {
     }
 
     private function validator($string, $conditions) {
-
-        return true;
+        if (preg_match($conditions, $string, $matcher)) {
+            if (isset($matcher[0]) && $matcher[0] == $tuntuni) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public function user_name_taken($user_name) {

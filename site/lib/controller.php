@@ -20,7 +20,6 @@ abstract class controller {
         $this->child = $class_name;
     }
 
-
     /**
      * You must need to implement this method. In any case it is not implemented then there will be an error thrown . 
      */
@@ -37,7 +36,6 @@ abstract class controller {
         }
     }
 
-
     protected static function redirect($url) {
         header("Location: " . $url);
     }
@@ -50,15 +48,17 @@ abstract class controller {
     }
 
     protected function _view() {
-       // $this->set_view("footer", 'footer/index.php');
+        // $this->set_view("footer", 'footer/index.php');
 
         if (IF_AJAX) {
             unset($this->view_array['header']);
             unset($this->view_array['footer']);
         }
 
-        foreach ($this->view_array as $key => $value) {
-            $this->view->render($value);
+        if ($this->view_array) {
+            foreach ($this->view_array as $key => $value) {
+                $this->view->render($value);
+            }
         }
         // for ($i=0; $i < sizeof(array_keys(sizeof($this->view_array))); $i++) { 
         // 	$this->view->render($this->view_array[]);

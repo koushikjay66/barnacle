@@ -50,7 +50,7 @@ abstract class controller {
     }
 
     protected function _view() {
-        $this->set_view("footer", 'footer/index.php');
+       // $this->set_view("footer", 'footer/index.php');
 
         if (IF_AJAX) {
             unset($this->view_array['header']);

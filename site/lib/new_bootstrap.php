@@ -65,7 +65,7 @@ class new_bootstrap {
              * to user go to the landing page.
              * @URL: http://barnacle.com
              */
-            define(IF_AJAX, FALSE);
+            define("IF_AJAX", false);
             $c = new \controllers\index();
             $c->view_loader();
         }

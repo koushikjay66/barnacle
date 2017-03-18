@@ -4,8 +4,9 @@ namespace controllers;
 
 use lib\controller as controller;
 
-if (!defined('LANDING_PAGE'))
+if (!defined('LANDING_PAGE')) {
     exit('No direct script access allowed');
+}
 
 /**
  * This is the Default Landing Page
@@ -24,16 +25,12 @@ class index extends controller {
     public function _load_constroctor_details() {
         
     }
-    private function most_view_projects() {
-
-        parent::set_view(__FUNCTION__, $this->class_name . '/' . __FUNCTION__ . '/index.php');
-    }
 
 // End of function mose_view_projects
 
     private function static_contents() {
 
-        parent::set_view(__FUNCTION__, $this->class_name . '/' . __FUNCTION__ . '/index.php');
+        parent::set_view(__FUNCTION__, $this->class_name . '/' . "static_contents" . '/index.php');
     }
 
     /**
